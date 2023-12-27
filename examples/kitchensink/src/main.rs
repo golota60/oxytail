@@ -1,8 +1,6 @@
 use floem::{
     kurbo::Size,
-    peniko::Color,
     reactive::create_signal,
-    style::Style,
     view::View,
     views::{label, stack, v_stack, Decorators},
     widgets::button,
@@ -10,13 +8,17 @@ use floem::{
     Application, EventPropagation,
 };
 use oxytail::{
-    themes::{get_theme_styles, OxyButtonClass, StyleEnhancer, Theme, ValidOxyclasses},
-    widgets::button::button as oxybutton,
+    themes::{StyleEnhancer, Theme},
+    widgets::{
+        button::button as oxy_button, checkbox::checkbox as oxy_checkbox,
+        checkbox::labeled_checkbox as oxy_labeled_checkbox,
+    },
 };
 
 fn app_view() -> impl View {
     // create a counter reactive signal with initial value 0
     let (counter, set_counter) = create_signal(0);
+    let (checked, set_checked) = create_signal(true);
 
     // create user interface with Floem view functions
     stack((
@@ -26,9 +28,17 @@ fn app_view() -> impl View {
                 set_counter.update(|value| *value += 1);
                 EventPropagation::Stop
             }),
-            oxybutton(|| "OXYTAIL").on_click(move |_| {
+            oxy_button(|| "OXYTAIL").on_click(move |_| {
                 set_counter.update(|value| *value -= 1);
                 EventPropagation::Stop
+            }),
+            oxy_checkbox(checked)
+                .style(|s| s.margin(5.0))
+                .on_click_stop(move |_| {
+                    set_checked.update(|checked| *checked = !*checked);
+                }),
+            oxy_labeled_checkbox(checked, || "check oxy").on_click_stop(move |_| {
+                set_checked.update(|checked| *checked = !*checked);
             }),
         )),
     ))
@@ -43,10 +53,7 @@ fn main() {
         .themed(false);
 
     let root_view = app_view();
-    let root_view = root_view.style(|_| {
-        let current_theme_styles = get_theme_styles(Theme::Light);
-        Style::new().enhance(current_theme_styles)
-    });
+    let root_view = root_view.style(|s| s.enhance(Theme::Light));
 
     let app = Application::new().window(move |_| root_view, Some(window_config));
 
