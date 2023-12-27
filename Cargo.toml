@@ -1,0 +1,16 @@
+[package]
+name = "oxytail"
+description = "Themed components for iced-rs - inspired by ??"
+license = "MIT"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e4223933267137229db0a619a0a" }
+
+[workspace]
+members = [
+	"examples/kitchensink",
+]
