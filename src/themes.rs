@@ -1,6 +1,6 @@
 use floem::{
     peniko::Color,
-    style::{Background, Style, Transition},
+    style::{Background, CursorStyle, Style, Transition},
     style_class,
 };
 
@@ -15,6 +15,7 @@ pub enum Theme {
 style_class!(pub OxyButtonClass);
 style_class!(pub OxyCheckboxClass);
 style_class!(pub OxyLabeledCheckboxClass);
+style_class!(pub OxyTextInputClass);
 
 pub trait StyleEnhancer {
     fn enhance(self, theme: Theme) -> Self;
@@ -108,9 +109,23 @@ impl StyleEnhancer for Style {
                     })
                     .apply(focus_style.clone());
 
+                let input_style = Style::new()
+                    .background(Color::WHITE)
+                    .hover(|s| s.background(light_hover_bg_color))
+                    .focus(|s| s.hover(|s| s.background(light_focus_hover_bg_color)))
+                    .apply(border_style.clone())
+                    .apply(focus_style.clone())
+                    .cursor(CursorStyle::Text)
+                    .padding_vert(8.0)
+                    .disabled(|s| {
+                        s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+                            .color(Color::GRAY)
+                    });
+
                 self = self.class(OxyButtonClass, |_| base_button_style);
                 self = self.class(OxyCheckboxClass, |_| base_checkbox_style);
                 self = self.class(OxyLabeledCheckboxClass, |_| base_labeled_checkbox_style);
+                self = self.class(OxyTextInputClass, |_| input_style);
 
                 self
             }

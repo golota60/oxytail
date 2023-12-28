@@ -3,7 +3,7 @@ use floem::{
     reactive::create_signal,
     view::View,
     views::{label, stack, v_stack, Decorators},
-    widgets::{button, checkbox, labeled_checkbox},
+    widgets::{button, checkbox, labeled_checkbox, slider::slider},
     window::WindowConfig,
     Application, EventPropagation,
 };
@@ -47,6 +47,8 @@ fn app_view() -> impl View {
             oxy_labeled_checkbox(checked, || "oxytail labeled").on_click_stop(move |_| {
                 set_checked.update(|checked| *checked = !*checked);
             }),
+            label(|| "SLIDERS(kinda broken)"),
+            slider(|| 50.0).style(|s| s.height(15).width(200)), // .on_change_pct(move |val| set_slider.set(val)),
         )),
     ))
 }
