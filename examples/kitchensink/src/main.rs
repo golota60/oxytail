@@ -1,5 +1,6 @@
 use floem::{
     kurbo::Size,
+    peniko::Color,
     reactive::create_signal,
     view::View,
     views::{label, stack, v_stack, Decorators},
@@ -25,25 +26,25 @@ fn app_view() -> impl View {
         label(move || format!("Value: {}", counter.get())),
         v_stack((
             label(|| "BUTTONS"),
-            button(|| "FLOEM").on_click(move |_| {
-                set_counter.update(|value| *value += 1);
-                EventPropagation::Stop
-            }),
-            oxy_button(|| "OXYTAIL").on_click(move |_| {
+            // button(|| "FLOEM").on_click(move |_| {
+            //     set_counter.update(|value| *value += 1);
+            //     EventPropagation::Stop
+            // }),
+            oxy_button(|| "Button").on_click(move |_| {
                 set_counter.update(|value| *value -= 1);
                 EventPropagation::Stop
             }),
             label(|| "CHECKBOXES(first-floem, second-oxytail)"),
-            checkbox(checked).on_click_stop(move |_| {
-                set_checked.update(|checked| *checked = !*checked);
-            }),
+            // checkbox(checked).on_click_stop(move |_| {
+            //     set_checked.update(|checked| *checked = !*checked);
+            // }),
             oxy_checkbox(checked).on_click_stop(move |_| {
                 set_checked.update(|checked| *checked = !*checked);
             }),
             label(|| "LABELED CHECKBOXES"),
-            labeled_checkbox(checked, || "floem labeled").on_click_stop(move |_| {
-                set_checked.update(|checked| *checked = !*checked);
-            }),
+            // labeled_checkbox(checked, || "floem labeled").on_click_stop(move |_| {
+            //     set_checked.update(|checked| *checked = !*checked);
+            // }),
             oxy_labeled_checkbox(checked, || "oxytail labeled").on_click_stop(move |_| {
                 set_checked.update(|checked| *checked = !*checked);
             }),
@@ -60,7 +61,7 @@ fn main() {
     });
 
     let root_view = app_view();
-    let root_view = root_view.style(|s| s.enhance(Theme::Light));
+    let root_view = root_view.style(|s| s.width_full().enhance(Theme::Dark));
 
     let app = Application::new().window(move |_| root_view, Some(window_config));
 

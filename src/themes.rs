@@ -7,8 +7,8 @@ use floem::{
 #[derive(Default)]
 pub enum Theme {
     #[default]
-    Light,
-    // Dark,
+    Dark,
+    // Light,
 }
 
 // Each class is the same across themes; only what the class name maps to changes.
@@ -24,14 +24,14 @@ pub trait StyleEnhancer {
 impl StyleEnhancer for Style {
     fn enhance(mut self, theme: Theme) -> Self {
         match theme {
-            Theme::Light => {
+            Theme::Dark => {
                 let border = Color::rgb8(140, 140, 140);
                 let padding = 5.0;
                 let border_radius = 5.0;
 
-                let hover_bg_color = Color::rgba8(228, 237, 216, 160);
-                let focus_hover_bg_color = Color::rgb8(234, 230, 236);
-                let active_bg_color = Color::rgb8(160, 160, 160);
+                let hover_bg_color = Color::rgb8(20, 25, 30);
+                let focus_hover_bg_color = Color::rgb8(20, 25, 30);
+                let active_bg_color = Color::rgb8(20, 25, 30);
                 let light_hover_bg_color = Color::rgb8(250, 252, 248);
                 let light_focus_hover_bg_color = Color::rgb8(250, 249, 251);
 
@@ -67,7 +67,8 @@ impl StyleEnhancer for Style {
                     });
 
                 let base_button_style = Style::new()
-                    .background(Color::rgb8(240, 240, 240))
+                    .background(Color::rgb8(25, 30, 36))
+                    .hover(|s| s.background(hover_bg_color))
                     .disabled(|s| {
                         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
                             .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
@@ -79,13 +80,10 @@ impl StyleEnhancer for Style {
                     })
                     .transition(Background, Transition::linear(0.04))
                     .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-                    .hover(|s| s.background(hover_bg_color))
                     .padding(padding)
                     .justify_center()
                     .items_center()
-                    .apply(focus_style.clone())
-                    .apply(border_style.clone())
-                    .color(Color::rgb8(40, 40, 40));
+                    .apply(focus_style.clone());
 
                 let base_labeled_checkbox_style = Style::new()
                     .gap(padding, 0.0)
@@ -121,6 +119,15 @@ impl StyleEnhancer for Style {
                         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
                             .color(Color::GRAY)
                     });
+
+                // Below is for eventual font support
+                // let mut font_db = floem::cosmic_text::fontdb::Database::new();
+                // font_db.load_system_fonts();
+                // self = self.font_family(StyleValue::Val("system-ui".to_string()));
+
+                self = self
+                    .background(Color::rgb8(29, 35, 42))
+                    .color(Color::rgb8(255, 255, 255));
 
                 self = self.class(OxyButtonClass, |_| base_button_style);
                 self = self.class(OxyCheckboxClass, |_| base_checkbox_style);
