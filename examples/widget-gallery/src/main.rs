@@ -38,33 +38,70 @@ fn app_view() -> impl View {
                         variant: ButtonVariant::Neutral,
                         ..Default::default()
                     }),
-                )
-                .on_click(move |_| {
-                    set_counter.update(|value| *value += 1);
-                    EventPropagation::Stop
-                }),
+                ),
                 oxy_button(
                     || "Primary",
                     Some(ButtonProps {
                         variant: ButtonVariant::Primary,
                         ..Default::default()
                     }),
-                )
-                .on_click(move |_| {
-                    set_counter.update(|value| *value -= 1);
-                    EventPropagation::Stop
-                }),
+                ),
                 oxy_button(
                     || "Secondary",
                     Some(ButtonProps {
                         variant: ButtonVariant::Secondary,
                         ..Default::default()
                     }),
-                )
-                .on_click(move |_| {
-                    set_counter.update(|value| *value -= 1);
-                    EventPropagation::Stop
-                }),
+                ),
+                oxy_button(
+                    || "Accent",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Accent,
+                        ..Default::default()
+                    }),
+                ),
+                oxy_button(
+                    || "Ghost",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Ghost,
+                        ..Default::default()
+                    }),
+                ),
+                oxy_button(
+                    || "Link",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Link,
+                        ..Default::default()
+                    }),
+                ),
+                oxy_button(
+                    || "Info",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Info,
+                        ..Default::default()
+                    }),
+                ),
+                oxy_button(
+                    || "Success",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Success,
+                        ..Default::default()
+                    }),
+                ),
+                oxy_button(
+                    || "Warning",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Warning,
+                        ..Default::default()
+                    }),
+                ),
+                oxy_button(
+                    || "Error",
+                    Some(ButtonProps {
+                        variant: ButtonVariant::Error,
+                        ..Default::default()
+                    }),
+                ),
             )),
             label(|| "CHECKBOXES(first-floem, second-oxytail)"),
             oxy_checkbox(checked).on_click_stop(move |_| {

@@ -32,14 +32,14 @@ impl ButtonVariant {
             ButtonVariant::Neutral => |s: Style| s.background(Color::rgb8(42, 50, 60)),
             ButtonVariant::Primary => |s: Style| s.background(Color::rgb8(116, 128, 255)),
             ButtonVariant::Secondary => |s: Style| s.background(Color::rgb8(255, 82, 217)),
-            ButtonVariant::Accent => |s: Style| s.background(Color::rgb8(42, 50, 60)),
-            ButtonVariant::Ghost => |s: Style| s.background(Color::rgb8(42, 50, 60)),
-            ButtonVariant::Link => |s: Style| s.background(Color::rgb8(42, 50, 60)),
+            ButtonVariant::Accent => |s: Style| s.background(Color::rgb8(0, 205, 183)),
+            ButtonVariant::Ghost => |s: Style| s.background(Color::TRANSPARENT),
+            ButtonVariant::Link => |s: Style| s.background(Color::rgb8(117, 130, 255)),
 
-            ButtonVariant::Info => |s: Style| s.background(Color::rgb8(42, 50, 60)),
-            ButtonVariant::Success => |s: Style| s.background(Color::rgb8(42, 50, 60)),
-            ButtonVariant::Warning => |s: Style| s.background(Color::rgb8(42, 50, 60)),
-            ButtonVariant::Error => |s: Style| s.background(Color::rgb8(42, 50, 60)),
+            ButtonVariant::Info => |s: Style| s.background(Color::rgb8(0, 181, 255)),
+            ButtonVariant::Success => |s: Style| s.background(Color::rgb8(0, 169, 110)),
+            ButtonVariant::Warning => |s: Style| s.background(Color::rgb8(255, 190, 0)),
+            ButtonVariant::Error => |s: Style| s.background(Color::rgb8(255, 88, 97)),
         }
     }
 }
