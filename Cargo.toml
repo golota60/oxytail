@@ -12,5 +12,5 @@ floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e422393326
 
 [workspace]
 members = [
-	"examples/kitchensink",
+	"examples/widget-gallery",
 ]

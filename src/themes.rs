@@ -1,4 +1,5 @@
 use floem::{
+    cosmic_text::Weight,
     peniko::Color,
     style::{Background, CursorStyle, Style, Transition},
     style_class,
@@ -67,20 +68,23 @@ impl StyleEnhancer for Style {
                     });
 
                 let base_button_style = Style::new()
-                    .background(Color::rgb8(25, 30, 36))
                     .hover(|s| s.background(hover_bg_color))
                     .disabled(|s| {
                         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
                             .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
-                            .color(Color::GRAY)
+                            .color(Color::rgb8(166, 173, 187))
                     })
-                    .active(|s| {
-                        s.background(active_bg_color)
-                            .color(Color::WHITE.with_alpha_factor(0.9))
-                    })
+                    .font_size(14.)
+                    .line_height(1.)
+                    .color(Color::rgb8(166, 173, 187))
+                    .font_weight(Weight::SEMIBOLD)
                     .transition(Background, Transition::linear(0.04))
                     .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-                    .padding(padding)
+                    .padding_left(16.0)
+                    .padding_right(16.0)
+                    .padding_top(20.0)
+                    .padding_bottom(20.0)
+                    .border_radius(5.0)
                     .justify_center()
                     .items_center()
                     .apply(focus_style.clone());
@@ -120,10 +124,16 @@ impl StyleEnhancer for Style {
                             .color(Color::GRAY)
                     });
 
+                // TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT. FONT IDEA: ROBOTO
                 // Below is for eventual font support
+                // https://github.com/lapce/floem/issues/76
                 // let mut font_db = floem::cosmic_text::fontdb::Database::new();
-                // font_db.load_system_fonts();
-                // self = self.font_family(StyleValue::Val("system-ui".to_string()));
+                // font_db.load_fonts_dir("fonts");
+                // let faces = font_db.faces();
+                // for f in faces {
+                //     println!("{}", f.post_script_name);
+                // }
+                // self = self.font_family(StyleValue::Val("Poppins-Bold.ttf".to_string()));
 
                 self = self
                     .background(Color::rgb8(29, 35, 42))
