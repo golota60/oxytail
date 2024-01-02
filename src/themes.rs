@@ -5,6 +5,8 @@ use floem::{
     style_class,
 };
 
+use crate::{widgets::button::ButtonVariant, GLOBAL_THEME};
+
 #[derive(Default)]
 pub enum Theme {
     #[default]
@@ -12,19 +14,41 @@ pub enum Theme {
     // Light,
 }
 
-// Each class is the same across themes; only what the class name maps to changes.
+// IDEA: Allow any style that implements ThemeStyle to be a valid style?
+// So that external styles can be created
+// TODO: Figure out a nice "stylesheet" that would create a theme
+
+/*
+This should work like the following
+
+1. User ".enhance(Theme)"s their style
+2. fn enhance() reads all the functions declared below to determine the stylesheets and how they should look like
+
+*/
+
+
+/*
+CURRENT LIMITATION: all the stylesheets need to have pre-defined types, so the "stylesheet" provided will have to use the same naming etc.
+Classes is the same across themes; only what the class name maps to changes.
+This should be ok tho. There needs to be a line somewhere.
+*/
+
+// BUTTON CLASSES
 style_class!(pub OxyButtonClass);
+//
+
 style_class!(pub OxyCheckboxClass);
 style_class!(pub OxyLabeledCheckboxClass);
 style_class!(pub OxyTextInputClass);
 
 pub trait StyleEnhancer {
-    fn enhance(self, theme: Theme) -> Self;
+    fn enhance(self) -> Self;
 }
 
 impl StyleEnhancer for Style {
-    fn enhance(mut self, theme: Theme) -> Self {
-        match theme {
+    fn enhance(mut self) -> Self {
+        let selected_theme = GLOBAL_THEME.get().expect("The theme is uninitialized. Did you forget to run `init_theme(Theme)` in your `main` function?");
+        match selected_theme {
             Theme::Dark => {
                 let border = Color::rgb8(140, 140, 140);
                 let padding = 5.0;
@@ -52,21 +76,6 @@ impl StyleEnhancer for Style {
                     .border_radius(border_radius)
                     .apply(focus_style.clone());
 
-                let base_checkbox_style = Style::new()
-                    .width(20.)
-                    .height(20.)
-                    .background(Color::WHITE)
-                    .active(|s| s.background(active_bg_color))
-                    .transition(Background, Transition::linear(0.04))
-                    .hover(|s| s.background(hover_bg_color))
-                    .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-                    .apply(border_style.clone())
-                    .apply(focus_style.clone())
-                    .disabled(|s| {
-                        s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-                            .color(Color::GRAY)
-                    });
-
                 let base_button_style = Style::new()
                     .hover(|s| s.background(hover_bg_color))
                     .disabled(|s| {
@@ -88,6 +97,25 @@ impl StyleEnhancer for Style {
                     .justify_center()
                     .items_center()
                     .apply(focus_style.clone());
+
+                let base_checkbox_style = Style::new()
+                    .width(20.)
+                    .height(20.)
+                    .background(Color::WHITE)
+                    .active(|s| s.background(active_bg_color))
+                    .transition(Background, Transition::linear(0.04))
+                    .hover(|s| s.background(hover_bg_color))
+                    .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
+                    .apply(border_style.clone())
+                    .apply(focus_style.clone())
+                    .disabled(|s| {
+                        s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+                            .color(Color::GRAY)
+                    });
+
+                // let base_button_style = selected_theme.button_style();
+                // let get_variant_style = base_button_style.get_variant_style;
+                // let variant_styles = get_variant_style(ButtonVariant::Primary);
 
                 let base_labeled_checkbox_style = Style::new()
                     .gap(padding, 0.0)

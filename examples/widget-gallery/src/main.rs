@@ -8,6 +8,7 @@ use floem::{
     Application, EventPropagation,
 };
 use oxytail::{
+    init_theme,
     themes::{StyleEnhancer, Theme},
     widgets::{
         button::{button as oxy_button, ButtonProps, ButtonVariant},
@@ -80,13 +81,16 @@ fn app_view() -> impl View {
 }
 
 fn main() {
+    let selected_theme = Theme::Dark;
+
     let window_config = WindowConfig::default().size(Size {
         width: 1000.0,
         height: 500.0,
     });
 
+    init_theme(selected_theme);
     let root_view = app_view();
-    let root_view = root_view.style(|s| s.width_full().enhance(Theme::Dark));
+    let root_view = root_view.style(|s| s.width_full().enhance());
 
     let app = Application::new().window(move |_| root_view, Some(window_config));
 
