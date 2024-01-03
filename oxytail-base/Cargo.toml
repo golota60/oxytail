@@ -1,0 +1,15 @@
+[package]
+name = "oxytail-base"
+description = "Building block for creating oxytail themes"
+license = "MIT"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74.1"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e4223933267137229db0a619a0a" }
+strum = "0.25.0"
+strum_macros = "0.25.3"
+
