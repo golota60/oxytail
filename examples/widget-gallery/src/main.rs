@@ -7,15 +7,15 @@ use floem::{
     window::WindowConfig,
     Application, EventPropagation,
 };
-use oxytail::{
+use oxytail_base::{
     init_theme,
-    themes::{StyleEnhancer, Theme},
     widgets::{
-        button::{button as oxy_button, ButtonProps, ButtonVariant},
-        checkbox::checkbox as oxy_checkbox,
-        checkbox::labeled_checkbox as oxy_labeled_checkbox,
+        button::{button, ButtonProps, ButtonVariant},
+        checkbox::checkbox,
+        checkbox::labeled_checkbox,
     },
 };
+use oxytail_theme_dark::Theme;
 
 fn app_view() -> impl View {
     // create a counter reactive signal with initial value 0
@@ -28,74 +28,74 @@ fn app_view() -> impl View {
         v_stack((
             label(|| "BUTTONS"),
             stack((
-                oxy_button(|| "Default", None).on_click(move |_| {
+                button(|| "Default", None).on_click(move |_| {
                     set_counter.update(|value| *value += 1);
                     EventPropagation::Stop
                 }),
-                oxy_button(
+                button(
                     || "Neutral",
                     Some(ButtonProps {
                         variant: ButtonVariant::Neutral,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Primary",
                     Some(ButtonProps {
                         variant: ButtonVariant::Primary,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Secondary",
                     Some(ButtonProps {
                         variant: ButtonVariant::Secondary,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Accent",
                     Some(ButtonProps {
                         variant: ButtonVariant::Accent,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Ghost",
                     Some(ButtonProps {
                         variant: ButtonVariant::Ghost,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Link",
                     Some(ButtonProps {
                         variant: ButtonVariant::Link,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Info",
                     Some(ButtonProps {
                         variant: ButtonVariant::Info,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Success",
                     Some(ButtonProps {
                         variant: ButtonVariant::Success,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Warning",
                     Some(ButtonProps {
                         variant: ButtonVariant::Warning,
                         ..Default::default()
                     }),
                 ),
-                oxy_button(
+                button(
                     || "Error",
                     Some(ButtonProps {
                         variant: ButtonVariant::Error,
@@ -104,11 +104,11 @@ fn app_view() -> impl View {
                 ),
             )),
             label(|| "CHECKBOXES(first-floem, second-oxytail)"),
-            oxy_checkbox(checked).on_click_stop(move |_| {
+            checkbox(checked).on_click_stop(move |_| {
                 set_checked.update(|checked| *checked = !*checked);
             }),
             label(|| "LABELED CHECKBOXES"),
-            oxy_labeled_checkbox(checked, || "oxytail labeled").on_click_stop(move |_| {
+            labeled_checkbox(checked, || "oxytail labeled").on_click_stop(move |_| {
                 set_checked.update(|checked| *checked = !*checked);
             }),
             label(|| "SLIDERS"),
@@ -118,16 +118,14 @@ fn app_view() -> impl View {
 }
 
 fn main() {
-    let selected_theme = Theme::Dark;
-
     let window_config = WindowConfig::default().size(Size {
         width: 1000.0,
         height: 500.0,
     });
 
-    init_theme(selected_theme);
+    init_theme(Theme::Dark);
     let root_view = app_view();
-    let root_view = root_view.style(|s| s.width_full().enhance());
+    let root_view = root_view.style(|s| s.width_full());
 
     let app = Application::new().window(move |_| root_view, Some(window_config));
 

@@ -6,5 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-oxytail = { path = "../.." }
+oxytail-theme-dark = { path = "../../oxytail-theme-dark" }
+oxytail-base = { path = "../../oxytail-base" }
 floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e4223933267137229db0a619a0a" }
