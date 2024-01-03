@@ -1,5 +1,5 @@
 use floem::{peniko::Color, style::Style};
-use oxytail_base::{themes::ButtonVariantStyles, widgets::button::ButtonVariant};
+use oxytail_base::{themes::ThemeStyling, widgets::button::ButtonVariant};
 
 #[derive(Default)]
 pub enum Theme {
@@ -8,7 +8,7 @@ pub enum Theme {
     // Light,
 }
 
-impl ButtonVariantStyles for Theme {
+impl ThemeStyling for Theme {
     fn get_button_base_style(&self, button_variant: ButtonVariant) -> Box<dyn Fn(Style) -> Style> {
         match button_variant {
             ButtonVariant::Default => Box::new(|s: Style| s.background(Color::rgb8(25, 30, 36))),

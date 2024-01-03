@@ -4,7 +4,7 @@ use floem::{
     peniko::Color, style::Style, view::View, views::Decorators, widgets::button as upstreambutton,
 };
 
-use crate::themes::OxyButtonClass;
+use crate::{themes::OxyButtonClass, GLOBAL_THEME};
 
 #[derive(Default)]
 pub enum ButtonSize {
@@ -48,7 +48,12 @@ pub fn button<S: Display + 'static>(
     let base_component = upstreambutton(label); //.class(OxyButtonClass);
 
     match props {
-        Some(props) => base_component,
+        Some(props) => base_component.style(
+            GLOBAL_THEME
+                .get()
+                .unwrap()
+                .get_button_base_style(props.variant),
+        ),
         None => base_component,
     }
 }

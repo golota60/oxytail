@@ -176,15 +176,10 @@ pub struct ButtonData {
     get_active: Box<dyn Fn(Style) -> Style>,
 }
 
-pub trait ButtonVariantStyles {
+pub trait ThemeStyling {
     fn get_button_base_style(&self, button_variant: ButtonVariant) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {
     pub variant_styles: T,
-}
-
-// Struct instance of which is required to be supplied by the theme package
-pub struct ThemeStyles<T> {
-    pub buttons: ButtonStyle<T>,
 }
