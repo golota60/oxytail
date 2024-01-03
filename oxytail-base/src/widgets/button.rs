@@ -43,7 +43,7 @@ pub fn button<S: Display + 'static>(
     label: impl Fn() -> S + 'static,
     props: Option<ButtonProps>,
 ) -> impl View {
-    let base_component = upstreambutton(label); //.class(OxyButtonClass);
+    let base_component = upstreambutton(label);
     let theme = GLOBAL_THEME.get().unwrap();
 
     match props {

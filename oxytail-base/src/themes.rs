@@ -1,12 +1,6 @@
-use floem::{
-    cosmic_text::Weight,
-    peniko::Color,
-    style::{Background, CursorStyle, Style, Transition},
-    style_class,
-};
+use floem::{peniko::Color, style::Style};
 
-use crate::{widgets::button::ButtonVariant, GLOBAL_THEME};
-use strum_macros::EnumString;
+use crate::widgets::button::ButtonVariant;
 
 // IDEA: Allow any style that implements ThemeStyle to be a valid style?
 // So that external styles can be created
@@ -25,14 +19,6 @@ CURRENT LIMITATION: all the stylesheets need to have pre-defined types, so the "
 Classes is the same across themes; only what the class name maps to changes.
 This should be ok tho. There needs to be a line somewhere.
 */
-
-// BUTTON CLASSES
-style_class!(pub OxyButtonClass);
-//
-
-style_class!(pub OxyCheckboxClass);
-style_class!(pub OxyLabeledCheckboxClass);
-style_class!(pub OxyTextInputClass);
 
 // pub trait StyleEnhancer {
 //     fn enhance(self) -> Self;
@@ -171,23 +157,7 @@ style_class!(pub OxyTextInputClass);
 //     }
 // }
 
-pub struct Reusables {
-    pub border: Color,
-    pub padding: f32,
-    pub border_radius: f32,
-    pub hover_bg_color: Color,
-    pub focus_hover_bg_color: Color,
-    pub active_bg_color: Color,
-    pub light_hover_bg_color: Color,
-    pub light_focus_hover_bg_color: Color,
-    pub focus_applied_style: Style,
-    pub focus_visible_applied_style: Style,
-    pub focus_style: Style,
-    pub border_style: Style,
-}
-
 pub trait ThemeStyling {
-    fn get_reusables(&self) -> Reusables;
     fn get_button_base_style(&self, button_variant: ButtonVariant) -> Style;
     // fn get_button_
 }

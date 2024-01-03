@@ -8,15 +8,25 @@ use oxytail_base::{
     widgets::button::ButtonVariant,
 };
 
-#[derive(Default)]
-pub enum Theme {
-    #[default]
-    Dark,
-    // Light,
+pub struct CommonThemeProps {
+    pub border: Color,
+    pub padding: f32,
+    pub border_radius: f32,
+    pub hover_bg_color: Color,
+    pub focus_hover_bg_color: Color,
+    pub active_bg_color: Color,
+    pub light_hover_bg_color: Color,
+    pub light_focus_hover_bg_color: Color,
+    pub focus_applied_style: Style,
+    pub focus_visible_applied_style: Style,
+    pub focus_style: Style,
+    pub border_style: Style,
 }
-
-impl ThemeStyling for Theme {
-    fn get_reusables(&self) -> Reusables {
+pub trait Reusables {
+    fn get_reusables(&self) -> CommonThemeProps;
+}
+impl Reusables for Theme {
+    fn get_reusables(&self) -> CommonThemeProps {
         let border = Color::rgb8(140, 140, 140);
         let padding = 5.0;
         let border_radius = 5.0;
@@ -43,7 +53,7 @@ impl ThemeStyling for Theme {
             .border_radius(border_radius)
             .apply(focus_style.clone());
 
-        Reusables {
+        CommonThemeProps {
             border,
             padding,
             border_radius,
@@ -58,6 +68,16 @@ impl ThemeStyling for Theme {
             border_style,
         }
     }
+}
+
+#[derive(Default)]
+pub enum Theme {
+    #[default]
+    Dark,
+    // Light,
+}
+
+impl ThemeStyling for Theme {
     fn get_button_base_style(&self, button_variant: ButtonVariant) -> Style {
         let reusables = self.get_reusables();
         let base_button_style = Style::new()

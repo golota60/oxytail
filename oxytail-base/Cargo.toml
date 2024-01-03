@@ -10,6 +10,4 @@ rust-version = "1.74.1"
 
 [dependencies]
 floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e4223933267137229db0a619a0a" }
-strum = "0.25.0"
-strum_macros = "0.25.3"
 
