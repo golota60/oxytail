@@ -1,10 +1,8 @@
 use std::fmt::Display;
 
-use floem::{
-    peniko::Color, style::Style, view::View, views::Decorators, widgets::button as upstreambutton,
-};
+use floem::{view::View, views::Decorators, widgets::button as upstreambutton};
 
-use crate::{themes::OxyButtonClass, GLOBAL_THEME};
+use crate::GLOBAL_THEME;
 
 #[derive(Default)]
 pub enum ButtonSize {
@@ -46,14 +44,15 @@ pub fn button<S: Display + 'static>(
     props: Option<ButtonProps>,
 ) -> impl View {
     let base_component = upstreambutton(label); //.class(OxyButtonClass);
+    let theme = GLOBAL_THEME.get().unwrap();
 
     match props {
-        Some(props) => base_component.style(
-            GLOBAL_THEME
-                .get()
-                .unwrap()
-                .get_button_base_style(props.variant),
-        ),
+        Some(props) => {
+            let base_styles = theme.get_button_base_style(props.variant);
+            let styled_button = base_component.style(move |_| base_styles.clone());
+
+            styled_button
+        }
         None => base_component,
     }
 }

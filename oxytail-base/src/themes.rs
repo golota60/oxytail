@@ -69,27 +69,27 @@ style_class!(pub OxyTextInputClass);
 //                     .border_radius(border_radius)
 //                     .apply(focus_style.clone());
 
-//                 let base_button_style = Style::new()
-//                     .hover(|s| s.background(hover_bg_color))
-//                     .disabled(|s| {
-//                         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-//                             .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
-//                             .color(Color::rgb8(166, 173, 187))
-//                     })
-//                     .font_size(14.)
-//                     .line_height(1.)
-//                     .color(Color::rgb8(166, 173, 187))
-//                     .font_weight(Weight::SEMIBOLD)
-//                     .transition(Background, Transition::linear(0.04))
-//                     .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-//                     .padding_left(16.0)
-//                     .padding_right(16.0)
-//                     .padding_top(20.0)
-//                     .padding_bottom(20.0)
-//                     .border_radius(5.0)
-//                     .justify_center()
-//                     .items_center()
-//                     .apply(focus_style.clone());
+// let base_button_style = Style::new()
+//     .hover(|s| s.background(hover_bg_color))
+//     .disabled(|s| {
+//         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+//             .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
+//             .color(Color::rgb8(166, 173, 187))
+//     })
+//     .font_size(14.)
+//     .line_height(1.)
+//     .color(Color::rgb8(166, 173, 187))
+//     .font_weight(Weight::SEMIBOLD)
+//     .transition(Background, Transition::linear(0.04))
+//     .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
+//     .padding_left(16.0)
+//     .padding_right(16.0)
+//     .padding_top(20.0)
+//     .padding_bottom(20.0)
+//     .border_radius(5.0)
+//     .justify_center()
+//     .items_center()
+//     .apply(focus_style.clone());
 
 //                 let base_checkbox_style = Style::new()
 //                     .width(20.)
@@ -171,13 +171,25 @@ style_class!(pub OxyTextInputClass);
 //     }
 // }
 
-pub struct ButtonData {
-    get_initial: Box<dyn Fn(Style) -> Style>,
-    get_active: Box<dyn Fn(Style) -> Style>,
+pub struct Reusables {
+    pub border: Color,
+    pub padding: f32,
+    pub border_radius: f32,
+    pub hover_bg_color: Color,
+    pub focus_hover_bg_color: Color,
+    pub active_bg_color: Color,
+    pub light_hover_bg_color: Color,
+    pub light_focus_hover_bg_color: Color,
+    pub focus_applied_style: Style,
+    pub focus_visible_applied_style: Style,
+    pub focus_style: Style,
+    pub border_style: Style,
 }
 
 pub trait ThemeStyling {
-    fn get_button_base_style(&self, button_variant: ButtonVariant) -> Box<dyn Fn(Style) -> Style>;
+    fn get_reusables(&self) -> Reusables;
+    fn get_button_base_style(&self, button_variant: ButtonVariant) -> Style;
+    // fn get_button_
 }
 
 pub struct ButtonStyle<T> {
