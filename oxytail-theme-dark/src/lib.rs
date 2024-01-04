@@ -3,10 +3,7 @@ use floem::{
     peniko::Color,
     style::{Background, Style, Transition},
 };
-use oxytail_base::{
-    themes::{Reusables, ThemeStyling},
-    widgets::button::ButtonVariant,
-};
+use oxytail_base::{themes::ThemeStyling, widgets::button::ButtonVariant};
 
 pub struct CommonThemeProps {
     pub border: Color,
@@ -78,47 +75,58 @@ pub enum Theme {
 }
 
 impl ThemeStyling for Theme {
-    fn get_button_base_style(&self, button_variant: ButtonVariant) -> Style {
+    fn get_button_base_style(&self, button_variant: ButtonVariant) -> Box<dyn Fn(Style) -> Style> {
         let reusables = self.get_reusables();
-        let base_button_style = Style::new()
-            .hover(|s| s.background(reusables.hover_bg_color))
-            .disabled(|s| {
-                s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-                    .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
+
+        let style_creator = move |s: Style| {
+            let base_button_style = {
+                s.hover(|s| s.background(reusables.hover_bg_color))
+                    .disabled(|s| {
+                        s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+                            .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
+                            .color(Color::rgb8(166, 173, 187))
+                    })
+                    .font_size(14.)
+                    .line_height(1.)
                     .color(Color::rgb8(166, 173, 187))
-            })
-            .font_size(14.)
-            .line_height(1.)
-            .color(Color::rgb8(166, 173, 187))
-            .font_weight(Weight::SEMIBOLD)
-            .transition(Background, Transition::linear(0.04))
-            .focus(|s| s.hover(|s| s.background(reusables.focus_hover_bg_color)))
-            .padding_left(16.0)
-            .padding_right(16.0)
-            .padding_top(20.0)
-            .padding_bottom(20.0)
-            .border_radius(5.0)
-            .justify_center()
-            .items_center()
-            .apply(reusables.focus_style.clone());
+                    .font_weight(Weight::SEMIBOLD)
+                    .transition(Background, Transition::linear(0.04))
+                    .focus(|s| s.hover(|s| s.background(reusables.focus_hover_bg_color)))
+                    .padding_left(16.0)
+                    .padding_right(16.0)
+                    .padding_top(20.0)
+                    .padding_bottom(20.0)
+                    .border_radius(5.0)
+                    .justify_center()
+                    .items_center()
+                    .apply(reusables.focus_style.clone())
+            };
 
-        let variant_enhancer = match button_variant {
-            ButtonVariant::Default => |s: Style| s.background(Color::rgb8(25, 30, 36)),
+            let variant_enhancer = match button_variant {
+                ButtonVariant::Default => |s: Style| s.background(Color::rgb8(25, 30, 36)),
 
-            ButtonVariant::Neutral => |s: Style| s.background(Color::rgb8(42, 50, 60)),
-            ButtonVariant::Primary => |s: Style| s.background(Color::rgb8(116, 128, 255)),
-            ButtonVariant::Secondary => |s: Style| s.background(Color::rgb8(255, 82, 217)),
-            ButtonVariant::Accent => |s: Style| s.background(Color::rgb8(0, 205, 183)),
-            ButtonVariant::Ghost => |s: Style| s.background(Color::TRANSPARENT),
-            ButtonVariant::Link => |s: Style| s.background(Color::rgb8(117, 130, 255)),
+                ButtonVariant::Neutral => |s: Style| s.background(Color::rgb8(42, 50, 60)),
+                ButtonVariant::Primary => |s: Style| s.background(Color::rgb8(116, 128, 255)),
+                ButtonVariant::Secondary => |s: Style| s.background(Color::rgb8(255, 82, 217)),
+                ButtonVariant::Accent => |s: Style| s.background(Color::rgb8(0, 205, 183)),
+                ButtonVariant::Ghost => |s: Style| s.background(Color::TRANSPARENT),
+                ButtonVariant::Link => |s: Style| s.background(Color::rgb8(117, 130, 255)),
 
-            ButtonVariant::Info => |s: Style| s.background(Color::rgb8(0, 181, 255)),
-            ButtonVariant::Success => |s: Style| s.background(Color::rgb8(0, 169, 110)),
-            ButtonVariant::Warning => |s: Style| s.background(Color::rgb8(255, 190, 0)),
-            ButtonVariant::Error => |s: Style| s.background(Color::rgb8(255, 88, 97)),
+                ButtonVariant::Info => |s: Style| s.background(Color::rgb8(0, 181, 255)),
+                ButtonVariant::Success => |s: Style| s.background(Color::rgb8(0, 169, 110)),
+                ButtonVariant::Warning => |s: Style| s.background(Color::rgb8(255, 190, 0)),
+                ButtonVariant::Error => |s: Style| s.background(Color::rgb8(255, 88, 97)),
+            };
+            let enhanced_button = variant_enhancer(base_button_style);
+
+            enhanced_button
         };
-        let enhanced_button = variant_enhancer(base_button_style);
-
-        enhanced_button
+        Box::new(style_creator)
+    }
+    fn get_button_size_style(
+        &self,
+        button_size: oxytail_base::widgets::button::ButtonSize,
+    ) -> Box<dyn Fn(Style) -> Style> {
+        Box::new(|s| s.size(200, 200))
     }
 }

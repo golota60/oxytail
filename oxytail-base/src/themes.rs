@@ -1,6 +1,6 @@
 use floem::{peniko::Color, style::Style};
 
-use crate::widgets::button::ButtonVariant;
+use crate::widgets::button::{ButtonSize, ButtonVariant};
 
 // IDEA: Allow any style that implements ThemeStyle to be a valid style?
 // So that external styles can be created
@@ -157,8 +157,11 @@ This should be ok tho. There needs to be a line somewhere.
 //     }
 // }
 
+// All the functions return a function on how to apply the style instead of the style object, cause we need to apply multiple styles to the same object.
+// E.g. button needs to have `base_style` applied, and then `size_style`. If those return two different Style instances, one is going to overwrite the other.
 pub trait ThemeStyling {
-    fn get_button_base_style(&self, button_variant: ButtonVariant) -> Style;
+    fn get_button_base_style(&self, button_variant: ButtonVariant) -> Box<dyn Fn(Style) -> Style>;
+    fn get_button_size_style(&self, button_size: ButtonSize) -> Box<dyn Fn(Style) -> Style>;
     // fn get_button_
 }
 

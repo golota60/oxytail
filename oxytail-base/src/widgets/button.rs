@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use floem::{view::View, views::Decorators, widgets::button as upstreambutton};
+use floem::{style::Style, view::View, views::Decorators, widgets::button as upstreambutton};
 
 use crate::GLOBAL_THEME;
 
@@ -14,7 +14,6 @@ pub enum ButtonSize {
 }
 
 #[derive(Default)]
-
 pub enum ButtonVariant {
     #[default]
     Default,
@@ -46,13 +45,15 @@ pub fn button<S: Display + 'static>(
     let base_component = upstreambutton(label);
     let theme = GLOBAL_THEME.get().unwrap();
 
-    match props {
-        Some(props) => {
-            let base_styles = theme.get_button_base_style(props.variant);
-            let styled_button = base_component.style(move |_| base_styles.clone());
+    let props = props.unwrap_or(ButtonProps::default());
 
-            styled_button
-        }
-        None => base_component,
-    }
+    let base_styles_enhancer = theme.get_button_base_style(props.variant);
+    let size_styles_enhancer = theme.get_button_size_style(props.size);
+
+    let enhanced_style = base_styles_enhancer(Style::new());
+    let enhanced_style = size_styles_enhancer(enhanced_style);
+
+    let styled_button = base_component.style(move |_| enhanced_style.clone());
+
+    styled_button
 }
