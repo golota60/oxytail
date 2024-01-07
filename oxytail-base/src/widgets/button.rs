@@ -2,7 +2,7 @@ use std::fmt::Display;
 
 use floem::{style::Style, view::View, views::Decorators, widgets::button as upstreambutton};
 
-use crate::GLOBAL_THEME;
+use crate::get_current_theme;
 
 use super::common_props::{OxySize, OxyVariant};
 
@@ -18,7 +18,7 @@ pub fn button<S: Display + 'static>(
     props: Option<ButtonProps>,
 ) -> impl View {
     let base_widget = upstreambutton(label);
-    let theme = GLOBAL_THEME.get().unwrap();
+    let theme = get_current_theme();
 
     let props = props.unwrap_or(ButtonProps::default());
 

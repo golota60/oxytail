@@ -1,7 +1,7 @@
 use floem::{
     cosmic_text::Weight,
     peniko::Color,
-    style::{Background, Style, StyleValue, Transition},
+    style::{Background, CursorStyle, Style, StyleValue, Transition},
 };
 use oxytail_base::{
     themes::ThemeStyling,
@@ -9,6 +9,7 @@ use oxytail_base::{
         button::ButtonProps,
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
+        text_input::InputProps,
     },
 };
 
@@ -166,15 +167,8 @@ impl ThemeStyling for Theme {
         let style_creator = move |s: Style| {
             let curr_variant_color = get_variant_colors(checkbox_props.variant);
             let base_checkbox_style = s
-                // .width(20.)
-                // .height(20.)
                 .background(Color::rgb8(166, 174, 188))
-                // .active(|s| s.background(active_bg_color))
                 .transition(Background, Transition::linear(0.04))
-                // .hover(|s| s.background(hover_bg_color))
-                // .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-                // .apply(border_style.clone())
-                // .apply(focus_style.clone())
                 .disabled(|s| {
                     s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
                         .color(Color::GRAY)
@@ -199,6 +193,52 @@ impl ThemeStyling for Theme {
             let enhanced_widget = size_enhancer(enhanced_widget);
 
             enhanced_widget
+        };
+
+        Box::new(style_creator)
+    }
+
+    fn get_input_style(&self, checkbox_props: InputProps) -> Box<dyn Fn(Style) -> Style> {
+        let reusables = self.get_reusables();
+
+        let style_creator = move |s: Style| {
+            let input_style = s
+                .cursor(CursorStyle::Text)
+                .outline(0.4)
+                .border_radius(0.5 * 16.)
+                .disabled(|s| {
+                    s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+                        .color(Color::GRAY)
+                })
+                .items_center()
+                .justify_center();
+            let curr_variant_color = get_variant_colors(checkbox_props.variant);
+
+            let variant_enhancer = |s: Style| match checkbox_props.variant {
+                OxyVariant::Default => s.outline_color(reusables.checkbox_default_color),
+                OxyVariant::Neutral => s.outline_color(reusables.checkbox_default_color),
+                _ => s.outline_color(curr_variant_color),
+            };
+            let size_enhancer = |s: Style| match checkbox_props.size {
+                OxySize::Large => s
+                    .height(4 * 16)
+                    .font_size(16. * 1.125)
+                    .padding_horiz(1.5 * 16.),
+                OxySize::Normal => s.height(3 * 16).padding_horiz(1 * 16),
+                OxySize::Small => s
+                    .height(2 * 16)
+                    .font_size(16. * 0.875)
+                    .padding_horiz(0.75 * 16.),
+                OxySize::Tiny => s
+                    .height(1.5 * 16.)
+                    .font_size(16. * 0.75)
+                    .padding_horiz(0.5 * 16.),
+            };
+
+            let enhanced_style = variant_enhancer(input_style);
+            let enhanced_style = size_enhancer(enhanced_style);
+
+            enhanced_style
         };
 
         Box::new(style_creator)

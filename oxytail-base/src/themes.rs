@@ -1,81 +1,6 @@
-use floem::{peniko::Color, style::Style};
+use floem::style::Style;
 
-use crate::widgets::{button::ButtonProps, checkbox::CheckboxProps};
-
-// IDEA: Allow any style that implements ThemeStyle to be a valid style?
-// So that external styles can be created
-// TODO: Figure out a nice "stylesheet" that would create a theme
-
-/*
-This should work like the following
-
-1. User ".enhance(Theme)"s their style
-2. fn enhance() reads all the functions declared below to determine the stylesheets and how they should look like
-
-*/
-
-/*
-CURRENT LIMITATION: all the stylesheets need to have pre-defined types, so the "stylesheet" provided will have to use the same naming etc.
-Classes is the same across themes; only what the class name maps to changes.
-This should be ok tho. There needs to be a line somewhere.
-*/
-
-// pub trait StyleEnhancer {
-//     fn enhance(self) -> Self;
-// }
-
-// impl StyleEnhancer for Style {
-//     fn enhance(mut self) -> Self {
-//         let selected_theme = GLOBAL_THEME.get().expect("The theme is uninitialized. Did you forget to run `init_theme(Theme)` in your `main` function?");
-//         match selected_theme {
-//             Theme::Dark => {
-//                 let border = Color::rgb8(140, 140, 140);
-//                 let padding = 5.0;
-//                 let border_radius = 5.0;
-
-//                 let hover_bg_color = Color::rgb8(20, 25, 30);
-//                 let focus_hover_bg_color = Color::rgb8(20, 25, 30);
-//                 let active_bg_color = Color::rgb8(20, 25, 30);
-//                 let light_hover_bg_color = Color::rgb8(250, 252, 248);
-//                 let light_focus_hover_bg_color = Color::rgb8(250, 249, 251);
-
-//                 let focus_applied_style = Style::new().border_color(Color::rgb8(114, 74, 140));
-//                 let focus_visible_applied_style = Style::new().outline(3.0);
-
-//                 let focus_style = Style::new()
-//                     .outline_color(Color::rgba8(213, 208, 216, 150))
-//                     .focus(|_| focus_applied_style.clone())
-//                     .focus_visible(|_| focus_visible_applied_style.clone());
-
-//                 let border_style = Style::new()
-//                     .disabled(|s| s.border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3)))
-//                     .border(1.0)
-//                     .border_color(border)
-//                     .padding(padding)
-//                     .border_radius(border_radius)
-//                     .apply(focus_style.clone());
-
-//                 let base_labeled_checkbox_style = Style::new()
-//                     .gap(padding, 0.0)
-//                     .hover(|s| s.background(hover_bg_color))
-//                     .padding(padding)
-//                     .transition(Background, Transition::linear(0.04))
-//                     .border_radius(border_radius)
-//                     .active(|s| s.class(OxyCheckboxClass, |s| s.background(active_bg_color)))
-//                     .focus(|s| {
-//                         s.class(OxyCheckboxClass, |_| focus_applied_style.clone())
-//                             .hover(|s| s.background(focus_hover_bg_color))
-//                     })
-//                     .disabled(|s| {
-//                         s.color(Color::GRAY).class(OxyCheckboxClass, |s| {
-//                             s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-//                                 .color(Color::GRAY)
-//                                 .hover(|s| {
-//                                     s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-//                                 })
-//                         })
-//                     })
-//                     .apply(focus_style.clone());
+use crate::widgets::{button::ButtonProps, checkbox::CheckboxProps, text_input::InputProps};
 
 //                 let input_style = Style::new()
 //                     .background(Color::WHITE)
@@ -122,7 +47,7 @@ pub trait ThemeStyling {
     /// To be implemented by themes; Defines how a button style should look like.  
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style>;
     fn get_checkbox_style(&self, checkbox_props: CheckboxProps) -> Box<dyn Fn(Style) -> Style>;
-    // fn get_labeled_checkbox_style(&self, labeled_checkbox_style: ) -> Box<dyn Fn(Style) -> Style>;
+    fn get_input_style(&self, checkbox_props: InputProps) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {
