@@ -1,6 +1,6 @@
 [package]
 name = "oxytail-theme-dark"
-description = "Dark theme for oxytail-loader"
+description = "Dark theme for oxytail-base"
 license = "MIT"
 version = "0.1.0"
 edition = "2021"
