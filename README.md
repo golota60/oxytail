@@ -20,33 +20,35 @@ Showcase:
 
 ## Installation
 
-`oxytail` consists of the main "base" package(`oxytail-base`), which, loads the theme you want.
+`oxytail` consists of the main "base" package(`oxytail-base`), which loads the theme you want, and theme packages(currently only one).
 
-Next, you need to choose your theme, and install it. Currently, `oxytail` comes with only one theme, `oxytail-theme-dark`, but if it doesn't suit your needs you can [write your own one](YOUR_OWN_THEME.md).
+Next, you need to choose your theme, and install it. Currently, `oxytail` comes with only one theme, `oxytail-theme-dark`, but if it doesn't suit your needs you can [write your own one](YOUR_OWN_THEME.md). It's still early days for this project, so a lot of components are missing.
 
-First, add floem(floem is not on crates.io just yet, so we need to add it as a git dependency)
+First, add floem(floem is not on crates.io just yet, so we need to add it as a git dependency) dependency to your `Cargo.toml`.
 
-```sh
-cargo add --git 'https://github.com/lapce/floem' floem
-```
+Next, add `oxytail-base`(to load a theme) and `oxytail-theme-dark`(a theme) also as a git dependency, since we rely on `floem`, which is not published.
 
-Next,  add `oxytail-base`(to load a theme) and `oxytail-theme-dark`(a theme) also as a git dependency, since we rely on `floem`, which is not published.
 
-```sh
-cargo add --git 'https://github.com/golota60/oxytail/tree/main/oxytail-base' oxytail-base
-cargo add --git 'https://github.com/golota60/oxytail/tree/main/oxytail-theme-dark' oxytail-theme-dark
+```toml
+[dependencies]
+
+floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e4223933267137229db0a619a0a" }
+oxytail-theme-dark = { git = "https://github.com/golota60/oxytail"}
+oxytail-base = { git = "https://github.com/golota60/oxytail"}
 ```
 
 Done! Now, initialize the theme, and simply use `floem` like normal, *except* import your widgets from `oxytail-base`!
 
 ```rs
+use floem::kurbo::Size;
+use floem::peniko::Color;
 use floem::reactive::create_signal;
 use floem::view::View;
 use floem::views::{h_stack, label, v_stack, Decorators};
-use oxytail_base::{
-    init_theme,
-    widgets::button::button,
-};
+use floem::window::WindowConfig;
+use floem::Application;
+use oxytail_base::{init_theme, widgets::button::button};
+use oxytail_theme_dark::Theme;
 
 fn app_view() -> impl View {
     // Create a reactive signal with a counter value, defaulting to 0
@@ -67,7 +69,6 @@ fn app_view() -> impl View {
         )),
     ))
 }
-
 
 fn main() {
     let window_config = WindowConfig::default()
@@ -96,6 +97,7 @@ fn main() {
     app.run();
 }
 
+
 ```
 
 ## Doumentation/Examples
@@ -121,9 +123,12 @@ Expect breaking changes.
 
 Short term roadmap(primitives only):
 
+- [ ] Toggles
+- [ ] Visual Dividers
 - [ ] Radio buttons
 - [ ] H1/H2/H3/H4/H5 Equivalents
-- [ ] Dropdowns
+- [ ] Dropdowns/Selects
+- [ ] Tooltips
 - [ ] Badges
 - [ ] Progress bars
 - [ ] [your suggestion](https://github.com/golota60/oxytail/issues/new)
