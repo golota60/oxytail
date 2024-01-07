@@ -90,9 +90,9 @@ fn main() {
 
 ```
 
-## Examples
+## Doumentation/Examples
 
-The best showcase is `examples/widget-gallery` package. Run it with `cargo run -p widget-gallery`.
+The best showcase is `examples/widget-gallery` package. Run it with `cargo run -p widget-gallery`. Docs.rs soon. 
 
 ## Contributing
 

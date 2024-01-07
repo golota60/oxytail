@@ -28,11 +28,7 @@ fn checkbox_with_state(props: Option<CheckboxProps>) -> impl View {
 }
 
 fn app_view() -> impl View {
-    // create a counter reactive signal with initial value 0
-    let (counter, set_counter) = create_signal(0);
     let (checked, set_checked) = create_signal(true);
-
-    // create user interface with Floem view functions
     stack((v_stack((
         label(|| "Buttons").style(|s| {
             s.width_full()
@@ -251,12 +247,29 @@ fn app_view() -> impl View {
             })),
         ))
         .style(|s| s.gap(4., 4.)),
-        // label(|| "LABELED CHECKBOXES"),
-        // labeled_checkbox(checked, || "oxytail labeled", None).on_click_stop(move |_| {
-        //     set_checked.update(|checked| *checked = !*checked);
-        // }),
-        // label(|| "SLIDERS"),
-        // slider(|| 50.0).style(|s| s.height(15).width(200)),
+        label(|| "Labeled checkboxes"),
+        v_stack((
+            labeled_checkbox(checked, || "I am the default!", None).on_click_stop(move |_| {
+                set_checked.update(|checked| *checked = !*checked);
+            }),
+            labeled_checkbox(
+                checked,
+                || "I am primary!",
+                Some(CheckboxProps {
+                    variant: OxyVariant::Primary,
+                    ..Default::default()
+                }),
+            )
+            .on_click_stop(move |_| {
+                set_checked.update(|checked| *checked = !*checked);
+            }),
+        ))
+        .style(|s| s.justify_start().items_start().gap(5., 5.)), // label(|| "LABELED CHECKBOXES"),
+                                                                 // labeled_checkbox(checked, || "oxytail labeled", None).on_click_stop(move |_| {
+                                                                 //     set_checked.update(|checked| *checked = !*checked);
+                                                                 // }),
+                                                                 // label(|| "SLIDERS"),
+                                                                 // slider(|| 50.0).style(|s| s.height(15).width(200)),
     )),))
 }
 

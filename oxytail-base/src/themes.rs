@@ -55,10 +55,6 @@ This should be ok tho. There needs to be a line somewhere.
 //                     .border_radius(border_radius)
 //                     .apply(focus_style.clone());
 
-//                 // let base_button_style = selected_theme.button_style();
-//                 // let get_variant_style = base_button_style.get_variant_style;
-//                 // let variant_styles = get_variant_style(OxyVariant::Primary);
-
 //                 let base_labeled_checkbox_style = Style::new()
 //                     .gap(padding, 0.0)
 //                     .hover(|s| s.background(hover_bg_color))
@@ -126,6 +122,7 @@ pub trait ThemeStyling {
     /// To be implemented by themes; Defines how a button style should look like.  
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style>;
     fn get_checkbox_style(&self, checkbox_props: CheckboxProps) -> Box<dyn Fn(Style) -> Style>;
+    // fn get_labeled_checkbox_style(&self, labeled_checkbox_style: ) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {
