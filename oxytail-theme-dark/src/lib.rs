@@ -204,7 +204,7 @@ impl ThemeStyling for Theme {
         let style_creator = move |s: Style| {
             let input_style = s
                 .cursor(CursorStyle::Text)
-                .outline(0.4)
+                .outline(1)
                 .border_radius(0.5 * 16.)
                 .disabled(|s| {
                     s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))

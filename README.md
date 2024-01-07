@@ -1,14 +1,22 @@
-# Oxytail
-
-INSERT_DEMO_IMG_HERE
-
-Ready to use native widgets for [Floem](https://github.com/lapce/floem), inspired by [daisyUI](https://daisyui.com/components/button/).
+<div align="center">
+	<h1>Oxytail</h1>
+	<p>
+		<b>Styled widget library built on top of <a href="https://github.com/lapce/floem">floem</a>, inspired by <a href="https://daisyui.com/components/button/">daisyUI</a></b>
+	</p>
+	<br>
+</div>
 
 Features:
  - Cross-system support
  - HIGHLY customizable - modify and create [your own themes](YOUR_OWN_THEME.md) easily
  - Supports dynamic theme switching(example needed!)
- - Based on a proven GUI library
+ - Built on top of [Floem](https://github.com/lapce/floem)
+ - Loosey inspired by [daisyUI](https://daisyui.com/components/button/)
+
+
+Showcase:
+
+<img src="https://github.com/golota60/oxytail/blob/main/img/demo.png">
 
 ## Installation
 
