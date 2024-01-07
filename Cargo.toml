@@ -1,5 +1,6 @@
 [workspace]
 
+resolver = "2"
 members = [
 	"oxytail-base",
 	"oxytail-theme-dark",

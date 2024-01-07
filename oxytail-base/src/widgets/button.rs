@@ -4,7 +4,7 @@ use floem::{style::Style, view::View, views::Decorators, widgets::button as upst
 
 use crate::GLOBAL_THEME;
 
-#[derive(Default)]
+#[derive(Default, Clone, Copy)]
 pub enum ButtonSize {
     Large,
     #[default]
@@ -13,7 +13,7 @@ pub enum ButtonSize {
     Tiny,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone, Copy)]
 pub enum ButtonVariant {
     #[default]
     Default,
@@ -31,7 +31,7 @@ pub enum ButtonVariant {
     Error,
 }
 
-#[derive(Default)]
+#[derive(Default, Clone, Copy)]
 pub struct ButtonProps {
     pub variant: ButtonVariant,
     pub outlined: bool,
@@ -47,11 +47,8 @@ pub fn button<S: Display + 'static>(
 
     let props = props.unwrap_or(ButtonProps::default());
 
-    let base_styles_enhancer = theme.get_button_base_style(props.variant);
-    let size_styles_enhancer = theme.get_button_size_style(props.size);
-
-    let enhanced_style = base_styles_enhancer(Style::new());
-    let enhanced_style = size_styles_enhancer(enhanced_style);
+    let styles_enhancer = theme.get_button_style(props);
+    let enhanced_style = styles_enhancer(Style::new());
 
     let styled_button = base_component.style(move |_| enhanced_style.clone());
 
