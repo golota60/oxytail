@@ -111,6 +111,15 @@ Obviously, we do not have many components which are present in daisyUI. The most
 
 Expect breaking changes.
 
+Short term roadmap(primitives only):
+
+- [ ] Radio buttons
+- [ ] H1/H2/H3/H4/H5 Equivalents
+- [ ] Dropdowns
+- [ ] Badges
+- [ ] Progress bars
+- [ ] [your suggestion](https://github.com/golota60/oxytail/issues/new)
+
 ## Notes
 
 The idea for this project came from my slight frustration when developing this [tauri-based desk manager app](https://github.com/golota60/trayasen). While for that project tauri is an awesome pick, I was looking for a native solution, i.e. not using system WebView. I've chosen `floem` as a base, because of their really friendly and extensible styling.
