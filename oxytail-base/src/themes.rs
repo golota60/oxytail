@@ -1,6 +1,6 @@
 use floem::{peniko::Color, style::Style};
 
-use crate::widgets::button::{ButtonProps, ButtonSize, ButtonVariant};
+use crate::widgets::{button::ButtonProps, checkbox::CheckboxProps};
 
 // IDEA: Allow any style that implements ThemeStyle to be a valid style?
 // So that external styles can be created
@@ -55,46 +55,9 @@ This should be ok tho. There needs to be a line somewhere.
 //                     .border_radius(border_radius)
 //                     .apply(focus_style.clone());
 
-// let base_button_style = Style::new()
-//     .hover(|s| s.background(hover_bg_color))
-//     .disabled(|s| {
-//         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-//             .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
-//             .color(Color::rgb8(166, 173, 187))
-//     })
-//     .font_size(14.)
-//     .line_height(1.)
-//     .color(Color::rgb8(166, 173, 187))
-//     .font_weight(Weight::SEMIBOLD)
-//     .transition(Background, Transition::linear(0.04))
-//     .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-//     .padding_left(16.0)
-//     .padding_right(16.0)
-//     .padding_top(20.0)
-//     .padding_bottom(20.0)
-//     .border_radius(5.0)
-//     .justify_center()
-//     .items_center()
-//     .apply(focus_style.clone());
-
-//                 let base_checkbox_style = Style::new()
-//                     .width(20.)
-//                     .height(20.)
-//                     .background(Color::WHITE)
-//                     .active(|s| s.background(active_bg_color))
-//                     .transition(Background, Transition::linear(0.04))
-//                     .hover(|s| s.background(hover_bg_color))
-//                     .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
-//                     .apply(border_style.clone())
-//                     .apply(focus_style.clone())
-//                     .disabled(|s| {
-//                         s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
-//                             .color(Color::GRAY)
-//                     });
-
 //                 // let base_button_style = selected_theme.button_style();
 //                 // let get_variant_style = base_button_style.get_variant_style;
-//                 // let variant_styles = get_variant_style(ButtonVariant::Primary);
+//                 // let variant_styles = get_variant_style(OxyVariant::Primary);
 
 //                 let base_labeled_checkbox_style = Style::new()
 //                     .gap(padding, 0.0)
@@ -162,6 +125,7 @@ This should be ok tho. There needs to be a line somewhere.
 pub trait ThemeStyling {
     /// To be implemented by themes; Defines how a button style should look like.  
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style>;
+    fn get_checkbox_style(&self, checkbox_props: CheckboxProps) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {

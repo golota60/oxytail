@@ -7,6 +7,7 @@ Ready to use native widgets for [Floem](https://github.com/lapce/floem), inspire
 Features:
  - Cross-system support
  - HIGHLY customizable - modify and create [your own themes](YOUR_OWN_THEME.md) easily
+ - Supports dynamic theme switching(example needed!)
  - Based on a proven GUI library
 
 ## Installation
@@ -49,10 +50,10 @@ fn app_view() -> impl View {
         label(move || format!("Value: {}", counter.get())),
         // Create a horizontal layout
         h_stack((
-            button(|| "Increment").on_click_stop(move |_| {
+            button(|| "Increment", None).on_click_stop(move |_| {
                 set_counter.update(|value| *value += 1);
             }),
-            button(|| "Decrement").on_click_stop(move |_| {
+            button(|| "Decrement", None).on_click_stop(move |_| {
                 set_counter.update(|value| *value -= 1);
             }),
         )),
@@ -102,6 +103,13 @@ If you want to submit a custom theme(or just link your own in this README for ot
 If you need some widgets which currently don't exist, please consider submitting them to the upstream `floem` library first.
 
 If you think some of the docs are unclear, also feel free to create an issue!
+
+
+## Roadmap
+
+Obviously, we do not have many components which are present in daisyUI. The most immediate roadmap focuses on two things: More components, more prop support and more themes.
+
+Expect breaking changes.
 
 ## Notes
 

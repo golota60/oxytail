@@ -3,7 +3,7 @@ use floem::{
     peniko::Color,
     reactive::create_signal,
     view::View,
-    views::{label, stack, v_stack, Decorators},
+    views::{h_stack, label, stack, v_stack, Decorators},
     widgets::slider::slider,
     window::WindowConfig,
     Application, EventPropagation,
@@ -11,12 +11,21 @@ use floem::{
 use oxytail_base::{
     init_theme,
     widgets::{
-        button::{button, ButtonProps, ButtonSize, ButtonVariant},
-        checkbox::checkbox,
+        button::{button, ButtonProps},
         checkbox::labeled_checkbox,
+        checkbox::{checkbox, CheckboxProps},
+        common_props::{OxySize, OxyVariant},
     },
 };
 use oxytail_theme_dark::Theme;
+
+fn checkbox_with_state(props: Option<CheckboxProps>) -> impl View {
+    let (checked, set_checked) = create_signal(true);
+
+    checkbox(checked, props).on_click_stop(move |_| {
+        set_checked.update(|checked| *checked = !*checked);
+    })
+}
 
 fn app_view() -> impl View {
     // create a counter reactive signal with initial value 0
@@ -37,70 +46,70 @@ fn app_view() -> impl View {
             button(
                 || "Neutral",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Neutral,
+                    variant: OxyVariant::Neutral,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Primary",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Primary,
+                    variant: OxyVariant::Primary,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Secondary",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Secondary,
+                    variant: OxyVariant::Secondary,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Accent",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Accent,
+                    variant: OxyVariant::Accent,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Ghost",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Ghost,
+                    variant: OxyVariant::Ghost,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Link",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Link,
+                    variant: OxyVariant::Link,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Info",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Info,
+                    variant: OxyVariant::Info,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Success",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Success,
+                    variant: OxyVariant::Success,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Warning",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Warning,
+                    variant: OxyVariant::Warning,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Error",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Error,
+                    variant: OxyVariant::Error,
                     ..Default::default()
                 }),
             ),
@@ -111,28 +120,28 @@ fn app_view() -> impl View {
             button(
                 || "Large",
                 Some(ButtonProps {
-                    size: ButtonSize::Large,
+                    size: OxySize::Large,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Normal",
                 Some(ButtonProps {
-                    size: ButtonSize::Normal,
+                    size: OxySize::Normal,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Small",
                 Some(ButtonProps {
-                    size: ButtonSize::Small,
+                    size: OxySize::Small,
                     ..Default::default()
                 }),
             ),
             button(
                 || "Tiny",
                 Some(ButtonProps {
-                    size: ButtonSize::Tiny,
+                    size: OxySize::Tiny,
                     ..Default::default()
                 }),
             ),
@@ -143,7 +152,7 @@ fn app_view() -> impl View {
             button(
                 || "Info",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Info,
+                    variant: OxyVariant::Info,
                     outlined: true,
                     ..Default::default()
                 }),
@@ -151,7 +160,7 @@ fn app_view() -> impl View {
             button(
                 || "Success",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Success,
+                    variant: OxyVariant::Success,
                     outlined: true,
                     ..Default::default()
                 }),
@@ -159,7 +168,7 @@ fn app_view() -> impl View {
             button(
                 || "Warning",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Warning,
+                    variant: OxyVariant::Warning,
                     outlined: true,
                     ..Default::default()
                 }),
@@ -167,7 +176,7 @@ fn app_view() -> impl View {
             button(
                 || "Error",
                 Some(ButtonProps {
-                    variant: ButtonVariant::Error,
+                    variant: OxyVariant::Error,
                     outlined: true,
                     ..Default::default()
                 }),
@@ -180,15 +189,74 @@ fn app_view() -> impl View {
                 .items_center()
                 .justify_center()
         }),
-        checkbox(checked).on_click_stop(move |_| {
-            set_checked.update(|checked| *checked = !*checked);
-        }),
-        label(|| "LABELED CHECKBOXES"),
-        labeled_checkbox(checked, || "oxytail labeled").on_click_stop(move |_| {
-            set_checked.update(|checked| *checked = !*checked);
-        }),
-        label(|| "SLIDERS"),
-        slider(|| 50.0).style(|s| s.height(15).width(200)),
+        label(|| "Checkbox sizes"),
+        h_stack((
+            checkbox_with_state(Some(CheckboxProps {
+                size: OxySize::Large,
+                ..Default::default()
+            })),
+            checkbox_with_state(None),
+            checkbox_with_state(Some(CheckboxProps {
+                size: OxySize::Small,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                size: OxySize::Tiny,
+                ..Default::default()
+            })),
+        ))
+        .style(|s| s.gap(4., 4.)),
+        label(|| "Checkbox variants"),
+        h_stack((
+            checkbox_with_state(None),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Neutral,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Primary,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Secondary,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Accent,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Ghost,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Link,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Info,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Success,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Warning,
+                ..Default::default()
+            })),
+            checkbox_with_state(Some(CheckboxProps {
+                variant: OxyVariant::Error,
+                ..Default::default()
+            })),
+        ))
+        .style(|s| s.gap(4., 4.)),
+        // label(|| "LABELED CHECKBOXES"),
+        // labeled_checkbox(checked, || "oxytail labeled", None).on_click_stop(move |_| {
+        //     set_checked.update(|checked| *checked = !*checked);
+        // }),
+        // label(|| "SLIDERS"),
+        // slider(|| 50.0).style(|s| s.height(15).width(200)),
     )),))
 }
 

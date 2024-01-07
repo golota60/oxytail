@@ -1,88 +1,68 @@
 use floem::{
     cosmic_text::Weight,
     peniko::Color,
-    style::{Background, Height, MinHeight, MinWidth, Style, Transition, Width},
+    style::{Background, Style, StyleValue, Transition},
 };
 use oxytail_base::{
     themes::ThemeStyling,
-    widgets::button::{ButtonProps, ButtonSize, ButtonVariant},
+    widgets::{
+        button::ButtonProps,
+        checkbox::CheckboxProps,
+        common_props::{OxySize, OxyVariant},
+    },
 };
 
 pub struct CommonThemeProps {
     pub light_text_color: Color,
     pub dark_text_color: Color,
+    pub checkbox_default_color: Color,
 }
 pub trait Reusables {
     fn get_reusables(&self) -> CommonThemeProps;
 }
 impl Reusables for Theme {
     fn get_reusables(&self) -> CommonThemeProps {
-        // let border = Color::rgb8(140, 140, 140);
-        // let padding = 5.0;
-        // let border_radius = 5.0;
-
-        // let hover_bg_color = Color::rgb8(20, 25, 30);
-        // let focus_hover_bg_color = Color::rgb8(20, 25, 30);
-        // let active_bg_color = Color::rgb8(20, 25, 30);
-        // let light_hover_bg_color = Color::rgb8(250, 252, 248);
-        // let light_focus_hover_bg_color = Color::rgb8(250, 249, 251);
-
-        // let focus_applied_style = Style::new().border_color(Color::rgb8(114, 74, 140));
-        // let focus_visible_applied_style = Style::new().outline(3.0);
-
-        // let focus_style = Style::new()
-        //     .outline_color(Color::rgba8(213, 208, 216, 150))
-        //     .focus(|_| focus_applied_style.clone())
-        //     .focus_visible(|_| focus_visible_applied_style.clone());
-
-        // let border_style = Style::new()
-        //     .disabled(|s| s.border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3)))
-        //     .border(1.0)
-        //     .border_color(border)
-        //     .padding(padding)
-        //     .border_radius(border_radius)
-        //     .apply(focus_style.clone());
-
         CommonThemeProps {
             light_text_color: Color::rgb8(166, 173, 187),
             dark_text_color: Color::rgb8(25, 2, 17),
+            checkbox_default_color: Color::rgb8(166, 173, 187),
         }
     }
 }
 
-fn get_variant_colors(button_variant: ButtonVariant) -> Color {
+fn get_variant_colors(button_variant: OxyVariant) -> Color {
     match button_variant {
-        ButtonVariant::Default => Color::rgb8(25, 30, 36),
+        OxyVariant::Default => Color::rgb8(25, 30, 36),
 
-        ButtonVariant::Neutral => Color::rgb8(42, 50, 60),
-        ButtonVariant::Primary => Color::rgb8(116, 128, 255),
-        ButtonVariant::Secondary => Color::rgb8(255, 82, 217),
-        ButtonVariant::Accent => Color::rgb8(0, 205, 183),
-        ButtonVariant::Ghost => Color::TRANSPARENT,
-        ButtonVariant::Link => Color::rgb8(117, 130, 255),
+        OxyVariant::Neutral => Color::rgb8(42, 50, 60),
+        OxyVariant::Primary => Color::rgb8(116, 128, 255),
+        OxyVariant::Secondary => Color::rgb8(255, 82, 217),
+        OxyVariant::Accent => Color::rgb8(0, 205, 183),
+        OxyVariant::Ghost => Color::TRANSPARENT,
+        OxyVariant::Link => Color::rgb8(117, 130, 255),
 
-        ButtonVariant::Info => Color::rgb8(0, 181, 255),
-        ButtonVariant::Success => Color::rgb8(0, 169, 110),
-        ButtonVariant::Warning => Color::rgb8(255, 190, 0),
-        ButtonVariant::Error => Color::rgb8(255, 88, 97),
+        OxyVariant::Info => Color::rgb8(0, 181, 255),
+        OxyVariant::Success => Color::rgb8(0, 169, 110),
+        OxyVariant::Warning => Color::rgb8(255, 190, 0),
+        OxyVariant::Error => Color::rgb8(255, 88, 97),
     }
 }
 
-fn get_hover_variant_colors(button_variant: ButtonVariant) -> Color {
+fn get_hover_variant_colors(button_variant: OxyVariant) -> Color {
     match button_variant {
-        ButtonVariant::Default => Color::rgb8(20, 25, 30),
+        OxyVariant::Default => Color::rgb8(20, 25, 30),
 
-        ButtonVariant::Neutral => Color::rgb8(35, 42, 51),
-        ButtonVariant::Primary => Color::rgb8(100, 110, 228),
-        ButtonVariant::Secondary => Color::rgb8(239, 71, 188),
-        ButtonVariant::Accent => Color::rgb8(0, 178, 159),
-        ButtonVariant::Ghost => Color::rgb8(56, 63, 71),
-        ButtonVariant::Link => Color::TRANSPARENT,
+        OxyVariant::Neutral => Color::rgb8(35, 42, 51),
+        OxyVariant::Primary => Color::rgb8(100, 110, 228),
+        OxyVariant::Secondary => Color::rgb8(239, 71, 188),
+        OxyVariant::Accent => Color::rgb8(0, 178, 159),
+        OxyVariant::Ghost => Color::rgb8(56, 63, 71),
+        OxyVariant::Link => Color::TRANSPARENT,
 
-        ButtonVariant::Info => Color::rgb8(0, 157, 228),
-        ButtonVariant::Success => Color::rgb8(0, 147, 95),
-        ButtonVariant::Warning => Color::rgb8(231, 165, 0),
-        ButtonVariant::Error => Color::rgb8(239, 76, 83),
+        OxyVariant::Info => Color::rgb8(0, 157, 228),
+        OxyVariant::Success => Color::rgb8(0, 147, 95),
+        OxyVariant::Warning => Color::rgb8(231, 165, 0),
+        OxyVariant::Error => Color::rgb8(239, 76, 83),
     }
 }
 
@@ -110,42 +90,41 @@ impl ThemeStyling for Theme {
                     .color(reusables.light_text_color)
                     .font_weight(Weight::SEMIBOLD)
                     .transition(Background, Transition::linear(0.04))
-                    // .focus(|s| s.hover(|s| s.background(reusables.focus_hover_bg_color)))
                     .border_radius(5.0)
                     .justify_center()
                     .items_center()
-                // .apply(Style::new().width(30))
+                    .cursor(StyleValue::Val(floem::style::CursorStyle::Pointer))
             };
 
             let curr_variant_color = get_variant_colors(button_props.variant);
             let variant_enhancer = |s: Style| match button_props.variant {
-                ButtonVariant::Default => s.background(curr_variant_color),
-                ButtonVariant::Neutral => s.background(curr_variant_color),
-                ButtonVariant::Ghost => s,
+                OxyVariant::Default => s.background(curr_variant_color),
+                OxyVariant::Neutral => s.background(curr_variant_color),
+                OxyVariant::Ghost => s,
                 // TODO: Links should be underlined
-                ButtonVariant::Link => s.color(curr_variant_color),
+                OxyVariant::Link => s.color(curr_variant_color),
                 _ => s
                     .background(curr_variant_color)
                     .color(reusables.dark_text_color),
             };
 
             let size_enhancer = match button_props.size {
-                ButtonSize::Large => |s: Style| {
+                OxySize::Large => |s: Style| {
                     s.min_height(4 * 16)
                         .height(4 * 16)
                         .padding_horiz(1.5 * 16.)
                         .font_size(1.125 * 16.)
                 },
-                ButtonSize::Normal => {
+                OxySize::Normal => {
                     |s: Style| s.min_height(3 * 16).height(3 * 16).padding_horiz(1.5 * 16.)
                 }
-                ButtonSize::Small => |s: Style| {
+                OxySize::Small => |s: Style| {
                     s.min_height(2 * 16)
                         .height(2 * 16)
                         .padding_horiz(0.75 * 16.)
                         .font_size(0.875 * 16.)
                 },
-                ButtonSize::Tiny => |s: Style| {
+                OxySize::Tiny => |s: Style| {
                     s.min_height(1.5 * 16.)
                         .height(1.5 * 16.)
                         .padding_horiz(0.5 * 16.)
@@ -165,9 +144,9 @@ impl ThemeStyling for Theme {
                     .outline_color(cloned)
                     .background(Color::TRANSPARENT);
                 match button_props.variant {
-                    ButtonVariant::Default => outline_style,
-                    ButtonVariant::Neutral => outline_style,
-                    ButtonVariant::Ghost => outline_style,
+                    OxyVariant::Default => outline_style,
+                    OxyVariant::Neutral => outline_style,
+                    OxyVariant::Ghost => outline_style,
                     _ => outline_style
                         .color(curr_variant_color)
                         .hover(|s| s.color(Color::rgb8(25, 2, 17))),
@@ -178,6 +157,50 @@ impl ThemeStyling for Theme {
 
             enhanced_button_style
         };
+        Box::new(style_creator)
+    }
+
+    fn get_checkbox_style(&self, checkbox_props: CheckboxProps) -> Box<dyn Fn(Style) -> Style> {
+        let reusables = self.get_reusables();
+
+        let style_creator = move |s: Style| {
+            let curr_variant_color = get_variant_colors(checkbox_props.variant);
+            let base_checkbox_style = s
+                // .width(20.)
+                // .height(20.)
+                .background(Color::rgb8(166, 174, 188))
+                // .active(|s| s.background(active_bg_color))
+                .transition(Background, Transition::linear(0.04))
+                // .hover(|s| s.background(hover_bg_color))
+                // .focus(|s| s.hover(|s| s.background(focus_hover_bg_color)))
+                // .apply(border_style.clone())
+                // .apply(focus_style.clone())
+                .disabled(|s| {
+                    s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+                        .color(Color::GRAY)
+                })
+                .border_radius(8)
+                .color(Color::rgb8(29, 35, 42));
+
+            let variant_enhancer = |s: Style| match checkbox_props.variant {
+                OxyVariant::Default => s.background(reusables.checkbox_default_color),
+                OxyVariant::Neutral => s.background(reusables.checkbox_default_color),
+                _ => s.background(curr_variant_color).color(Color::BLACK),
+            };
+
+            let size_enhancer = |s: Style| match checkbox_props.size {
+                OxySize::Large => s.width(2. * 16.).height(2. * 16.),
+                OxySize::Normal => s.width(1.5 * 16.).height(1.5 * 16.),
+                OxySize::Small => s.width(1.25 * 16.).height(1.25 * 16.),
+                OxySize::Tiny => s.width(1. * 16.).height(1. * 16.),
+            };
+
+            let enhanced_widget = variant_enhancer(base_checkbox_style);
+            let enhanced_widget = size_enhancer(enhanced_widget);
+
+            enhanced_widget
+        };
+
         Box::new(style_creator)
     }
 }

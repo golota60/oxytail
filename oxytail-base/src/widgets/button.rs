@@ -4,38 +4,13 @@ use floem::{style::Style, view::View, views::Decorators, widgets::button as upst
 
 use crate::GLOBAL_THEME;
 
-#[derive(Default, Clone, Copy)]
-pub enum ButtonSize {
-    Large,
-    #[default]
-    Normal,
-    Small,
-    Tiny,
-}
-
-#[derive(Default, Clone, Copy)]
-pub enum ButtonVariant {
-    #[default]
-    Default,
-
-    Neutral,
-    Primary,
-    Secondary,
-    Accent,
-    Ghost,
-    Link,
-
-    Info,
-    Success,
-    Warning,
-    Error,
-}
+use super::common_props::{OxySize, OxyVariant};
 
 #[derive(Default, Clone, Copy)]
 pub struct ButtonProps {
-    pub variant: ButtonVariant,
+    pub variant: OxyVariant,
     pub outlined: bool,
-    pub size: ButtonSize,
+    pub size: OxySize,
 }
 
 pub fn button<S: Display + 'static>(
