@@ -25,6 +25,12 @@ fn app_view() -> impl View {
 
     // create user interface with Floem view functions
     stack((v_stack((
+        label(|| "Buttons").style(|s| {
+            s.width_full()
+                .font_size(20.)
+                .items_center()
+                .justify_center()
+        }),
         label(|| "Button variants"),
         stack((
             button(|| "Default", None),
@@ -168,7 +174,12 @@ fn app_view() -> impl View {
             ),
         ))
         .style(|s| s.gap(4., 4.)),
-        label(|| "CHECKBOXES(first-floem, second-oxytail)"),
+        label(|| "Checkboxes").style(|s| {
+            s.width_full()
+                .font_size(20.)
+                .items_center()
+                .justify_center()
+        }),
         checkbox(checked).on_click_stop(move |_| {
             set_checked.update(|checked| *checked = !*checked);
         }),
@@ -184,7 +195,7 @@ fn app_view() -> impl View {
 fn main() {
     let window_config = WindowConfig::default()
         .size(Size {
-            width: 1000.0,
+            width: 1200.0,
             height: 500.0,
         })
         .themed(false);
@@ -195,6 +206,7 @@ fn main() {
         s.width_full()
             .background(Color::rgb8(29, 35, 42))
             .color(Color::rgb8(166, 173, 187))
+            .padding(16.)
     });
 
     let app = Application::new().window(move |_| root_view, Some(window_config));
