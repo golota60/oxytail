@@ -246,74 +246,26 @@ impl ThemeStyling for Theme {
         Box::new(style_creator)
     }
 
-    fn get_toggle_border_style(
-        &self,
-        toggle_props: ToggleProps,
-        enabled: bool,
-    ) -> Box<dyn Fn(Style) -> Style> {
+    fn get_toggle_border_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style> {
         let reusables = self.get_reusables();
         let style_creator = move |s: Style| {
             let curr_variant_color = get_variant_colors(toggle_props.variant);
-            let base_toggle_style = s
-                .border(1)
-                .padding(2)
-                .border_color(curr_variant_color)
-                .border_radius(31);
+            let base_toggle_style = s.border_radius(31);
 
             let size_enhancer = |s: Style| match toggle_props.size {
                 // These sizes are completely arbitrary
-                OxySize::Large => s.width(61).height(32),
-                OxySize::Normal => s.width(46.4).height(24),
-                OxySize::Small => s.width(30.4).height(20),
-                OxySize::Tiny => s.padding(1).width(25.6).height(16),
+                OxySize::Large => s.min_width(64).min_height(32),
+                OxySize::Normal => s.min_width(48).min_height(24),
+                OxySize::Small => s.min_width(32).min_height(16),
+                OxySize::Tiny => s.min_width(25.6).min_height(16),
             };
-
-            let enabled_enhancer = |s: Style| match enabled {
-                true => s
-                    .display(Display::Flex)
-                    .flex_direction(FlexDirection::RowReverse),
-                false => s.display(Display::Flex).flex_direction(FlexDirection::Row),
-            };
-
-            let variant_enhancer = |s: Style| match toggle_props.variant {
-                OxyVariant::Default => s.border_color(reusables.gray_default_color),
-                _ => s.border_color(curr_variant_color),
-            };
-
-            let enhanced_style = size_enhancer(base_toggle_style);
-            let enhanced_style = enabled_enhancer(enhanced_style);
-            let enhanced_style = variant_enhancer(enhanced_style);
-
-            enhanced_style
-        };
-
-        Box::new(style_creator)
-    }
-
-    fn get_toggle_ball_style(
-        &self,
-        toggle_props: ToggleProps,
-        _enabled: bool,
-    ) -> Box<dyn Fn(Style) -> Style> {
-        let reusables = self.get_reusables();
-        let style_creator = move |s: Style| {
-            let curr_variant_color = get_variant_colors(toggle_props.variant);
-            let base_ball_style = s.color(curr_variant_color).border_radius(Pct(50.));
-            let size_enhancer = |s: Style| match toggle_props.size {
-                // These sizes are completely arbitrary
-                OxySize::Large => s.width(25.28).height(25.28),
-                OxySize::Normal => s.width(17.28).height(17.28),
-                OxySize::Small => s.width(13.44).height(13.44),
-                OxySize::Tiny => s.width(10.72).height(10.72),
-            };
-
-            let enhanced_style = size_enhancer(base_ball_style);
 
             let variant_enhancer = |s: Style| match toggle_props.variant {
                 OxyVariant::Default => s.color(reusables.gray_default_color),
                 _ => s.color(curr_variant_color),
             };
 
+            let enhanced_style = size_enhancer(base_toggle_style);
             let enhanced_style = variant_enhancer(enhanced_style);
 
             enhanced_style

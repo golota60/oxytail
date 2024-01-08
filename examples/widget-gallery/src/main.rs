@@ -76,7 +76,7 @@ fn app_view() -> impl View {
         toggle_variants(),
         toggle_sizes(),
         toggle_sizes(),
-        toggle_sizes(), // labeled_checkbox(checked, || "oxytail labeled", None).on_click_stop(move |_| {
+        // toggle_sizes(), // labeled_checkbox(checked, || "oxytail labeled", None).on_click_stop(move |_| {
                         //     set_checked.update(|checked| *checked = !*checked);
                         // }),
                         // label(|| "SLIDERS"),
