@@ -80,7 +80,7 @@ fn main() {
             width: 1200.0,
             height: 800.0,
         })
-        .themed(false);
+        .apply_default_theme(false);
 
     init_theme(Theme::Dark);
     let root_view = app_view();
