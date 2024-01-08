@@ -32,7 +32,7 @@ Next, add `oxytail-base`(to load a theme) and `oxytail-theme-dark`(a theme) also
 ```toml
 [dependencies]
 
-floem = { git = "https://github.com/lapce/floem", rev = "92ba6406b2406e4223933267137229db0a619a0a" }
+floem = { git = "https://github.com/lapce/floem", rev = "e304d30f8771a28788904d64464d8fd192d07439" }
 oxytail-theme-dark = { git = "https://github.com/golota60/oxytail"}
 oxytail-base = { git = "https://github.com/golota60/oxytail"}
 ```
@@ -78,7 +78,7 @@ fn main() {
         })
         // 1. We don't want any default `floem` styling to be interfering with ours,
         // so we need to disable the default styling.
-        .themed(false);
+        .apply_default_theme(false);
 
     // 2. We need to initialize our theme
     init_theme(Theme::Dark);
