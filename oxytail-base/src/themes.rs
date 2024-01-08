@@ -1,6 +1,8 @@
 use floem::style::Style;
 
-use crate::widgets::{button::ButtonProps, checkbox::CheckboxProps, text_input::InputProps};
+use crate::widgets::{
+    button::ButtonProps, checkbox::CheckboxProps, text_input::InputProps, toggle::ToggleProps,
+};
 
 //                 let input_style = Style::new()
 //                     .background(Color::WHITE)
@@ -43,11 +45,27 @@ use crate::widgets::{button::ButtonProps, checkbox::CheckboxProps, text_input::I
 
 // All the functions return a function on how to apply the style instead of the style object, cause we need to apply multiple styles to the same object.
 // E.g. button needs to have `base_style` applied, and then `size_style`. If those return two different Style instances, one is going to overwrite the other.
+
+/// To be implemented by themes.
 pub trait ThemeStyling {
-    /// To be implemented by themes; Defines how a button style should look like.  
+    /// Defines how a button style should look like.
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style>;
+    /// Defines how a checkbox should look like.
     fn get_checkbox_style(&self, checkbox_props: CheckboxProps) -> Box<dyn Fn(Style) -> Style>;
+    /// Defines how a input should look like.
     fn get_input_style(&self, checkbox_props: InputProps) -> Box<dyn Fn(Style) -> Style>;
+    /// Defines how a toggle outline should look like.
+    fn get_toggle_border_style(
+        &self,
+        toggle_props: ToggleProps,
+        enabled: bool,
+    ) -> Box<dyn Fn(Style) -> Style>;
+    /// Defines how a toggle "ball" should look like.
+    fn get_toggle_ball_style(
+        &self,
+        toggle_props: ToggleProps,
+        enabled: bool,
+    ) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {

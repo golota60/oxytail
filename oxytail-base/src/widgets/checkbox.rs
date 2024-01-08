@@ -27,9 +27,8 @@ fn checkbox_svg(checked: ReadSignal<bool>, props: Option<CheckboxProps>) -> impl
     let props = props.unwrap_or(CheckboxProps::default());
 
     let styles_enhancer = theme.get_checkbox_style(props);
-    let enhanced_style = styles_enhancer(Style::new());
 
-    let styled_checkbox = base_widget.style(move |_| enhanced_style.clone());
+    let styled_checkbox = base_widget.style(move |s| styles_enhancer(s));
 
     styled_checkbox
 }

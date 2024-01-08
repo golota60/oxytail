@@ -23,10 +23,9 @@ pub fn text_input(buffer: RwSignal<String>, props: Option<InputProps>) -> TextIn
     let props = props.unwrap_or(InputProps::default());
 
     let styles_enhancer = theme.get_input_style(props);
-    let enhanced_style = styles_enhancer(Style::new());
 
     // .style() does not exist on an input
-    let styled_input = base_widget.base_style(move |_| enhanced_style.clone());
+    let styled_input = base_widget.base_style(move |s| styles_enhancer(s));
 
     styled_input
 }
