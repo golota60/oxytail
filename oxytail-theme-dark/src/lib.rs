@@ -10,13 +10,14 @@ use oxytail_base::{
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
         text_input::InputProps,
+        toggle::ToggleProps,
     },
 };
 
 pub struct CommonThemeProps {
     pub light_text_color: Color,
     pub dark_text_color: Color,
-    pub checkbox_default_color: Color,
+    pub gray_default_color: Color,
 }
 pub trait Reusables {
     fn get_reusables(&self) -> CommonThemeProps;
@@ -26,13 +27,13 @@ impl Reusables for Theme {
         CommonThemeProps {
             light_text_color: Color::rgb8(166, 173, 187),
             dark_text_color: Color::rgb8(25, 2, 17),
-            checkbox_default_color: Color::rgb8(166, 173, 187),
+            gray_default_color: Color::rgb8(166, 173, 187),
         }
     }
 }
 
-fn get_variant_colors(button_variant: OxyVariant) -> Color {
-    match button_variant {
+fn get_variant_colors(oxy_variant: OxyVariant) -> Color {
+    match oxy_variant {
         OxyVariant::Default => Color::rgb8(25, 30, 36),
 
         OxyVariant::Neutral => Color::rgb8(42, 50, 60),
@@ -49,8 +50,8 @@ fn get_variant_colors(button_variant: OxyVariant) -> Color {
     }
 }
 
-fn get_hover_variant_colors(button_variant: OxyVariant) -> Color {
-    match button_variant {
+fn get_hover_variant_colors(oxy_variant: OxyVariant) -> Color {
+    match oxy_variant {
         OxyVariant::Default => Color::rgb8(20, 25, 30),
 
         OxyVariant::Neutral => Color::rgb8(35, 42, 51),
@@ -177,8 +178,8 @@ impl ThemeStyling for Theme {
                 .color(Color::rgb8(29, 35, 42));
 
             let variant_enhancer = |s: Style| match checkbox_props.variant {
-                OxyVariant::Default => s.background(reusables.checkbox_default_color),
-                OxyVariant::Neutral => s.background(reusables.checkbox_default_color),
+                OxyVariant::Default => s.background(reusables.gray_default_color),
+                OxyVariant::Neutral => s.background(reusables.gray_default_color),
                 _ => s.background(curr_variant_color).color(Color::BLACK),
             };
 
@@ -215,8 +216,8 @@ impl ThemeStyling for Theme {
             let curr_variant_color = get_variant_colors(checkbox_props.variant);
 
             let variant_enhancer = |s: Style| match checkbox_props.variant {
-                OxyVariant::Default => s.outline_color(reusables.checkbox_default_color),
-                OxyVariant::Neutral => s.outline_color(reusables.checkbox_default_color),
+                OxyVariant::Default => s.outline_color(reusables.gray_default_color),
+                OxyVariant::Neutral => s.outline_color(reusables.gray_default_color),
                 _ => s.outline_color(curr_variant_color),
             };
             let size_enhancer = |s: Style| match checkbox_props.size {
@@ -237,6 +238,34 @@ impl ThemeStyling for Theme {
 
             let enhanced_style = variant_enhancer(input_style);
             let enhanced_style = size_enhancer(enhanced_style);
+
+            enhanced_style
+        };
+
+        Box::new(style_creator)
+    }
+
+    fn get_toggle_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style> {
+        let reusables = self.get_reusables();
+        let style_creator = move |s: Style| {
+            let curr_variant_color = get_variant_colors(toggle_props.variant);
+            let base_toggle_style = s.border_radius(31);
+
+            let size_enhancer = |s: Style| match toggle_props.size {
+                // These sizes are completely arbitrary
+                OxySize::Large => s.min_width(64).min_height(32),
+                OxySize::Normal => s.min_width(48).min_height(24),
+                OxySize::Small => s.min_width(32).min_height(16),
+                OxySize::Tiny => s.min_width(25.6).min_height(16),
+            };
+
+            let variant_enhancer = |s: Style| match toggle_props.variant {
+                OxyVariant::Default => s.color(reusables.gray_default_color),
+                _ => s.color(curr_variant_color),
+            };
+
+            let enhanced_style = size_enhancer(base_toggle_style);
+            let enhanced_style = variant_enhancer(enhanced_style);
 
             enhanced_style
         };

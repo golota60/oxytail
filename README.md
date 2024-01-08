@@ -123,7 +123,7 @@ Expect breaking changes.
 
 Short term roadmap(primitives only):
 
-- [ ] Toggles
+- [x] Toggles
 - [ ] Visual Dividers
 - [ ] Radio buttons
 - [ ] H1/H2/H3/H4/H5 Equivalents
