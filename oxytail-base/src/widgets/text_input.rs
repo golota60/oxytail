@@ -1,6 +1,5 @@
 use floem::{
     reactive::RwSignal,
-    style::Style,
     views::{Decorators, TextInput},
     widgets::text_input as upstream_text_input,
 };

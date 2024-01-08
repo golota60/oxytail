@@ -1,8 +1,7 @@
 use floem::{
-    peniko::Color,
-    reactive::{create_signal, ReadSignal},
+    reactive::ReadSignal,
     view::View,
-    views::{container, dyn_container, svg, Decorators},
+    views::{svg, Decorators},
 };
 
 use crate::get_current_theme;
@@ -34,33 +33,13 @@ fn toggle_ball_svg(enabled: ReadSignal<bool>, props: Option<ToggleProps>) -> imp
     let theme = get_current_theme();
     let props = props.unwrap_or(ToggleProps::default());
 
-    let styles_enhancer = theme.get_toggle_border_style(props, enabled.get());
+    let styles_enhancer = theme.get_toggle_style(props);
 
     let styled_toggle = base_widget.style(move |s| styles_enhancer(s));
 
     styled_toggle
-
-    // base_widget.style(|s| s.width(48).height(24).color(Color))
 }
 
 pub fn toggle(enabled: ReadSignal<bool>, props: Option<ToggleProps>) -> impl View {
-    // We need to wrap the toggle in a dynamic container, just so it can re-render on `enabled` change.
-    // let base_widget = dyn_container(
-    //     move || enabled.get(),
-    //     move |en| {
-    //         let base_widget = container(toggle_ball_svg(create_signal(en).0, props));
-
-    //         let base_widget = base_widget.keyboard_navigatable();
-    //         let theme = get_current_theme();
-    //         let props = props.unwrap_or(ToggleProps::default());
-
-    //         let styles_enhancer = theme.get_toggle_border_style(props, en);
-
-    //         let styled_widget = base_widget.style(move |s| styles_enhancer(s));
-
-    //         Box::new(styled_widget)
-    //     },
-    // );
-
     toggle_ball_svg(enabled, props)
 }

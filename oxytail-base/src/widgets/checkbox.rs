@@ -2,7 +2,6 @@ use std::fmt::Display;
 
 use floem::{
     reactive::ReadSignal,
-    style::Style,
     view::View,
     views::{self, h_stack, svg, Decorators},
 };

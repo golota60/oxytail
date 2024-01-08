@@ -1,8 +1,7 @@
 use floem::{
     cosmic_text::Weight,
     peniko::Color,
-    style::{Background, CursorStyle, Display, FlexDirection, Style, StyleValue, Transition},
-    unit::Pct,
+    style::{Background, CursorStyle, Style, StyleValue, Transition},
 };
 use oxytail_base::{
     themes::ThemeStyling,
@@ -246,7 +245,7 @@ impl ThemeStyling for Theme {
         Box::new(style_creator)
     }
 
-    fn get_toggle_border_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style> {
+    fn get_toggle_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style> {
         let reusables = self.get_reusables();
         let style_creator = move |s: Style| {
             let curr_variant_color = get_variant_colors(toggle_props.variant);

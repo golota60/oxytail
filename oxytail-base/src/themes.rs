@@ -26,7 +26,7 @@ pub trait ThemeStyling {
     /// Defines how a input should look like.
     fn get_input_style(&self, checkbox_props: InputProps) -> Box<dyn Fn(Style) -> Style>;
     /// Defines how a toggle should look like.
-    fn get_toggle_border_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style>;
+    fn get_toggle_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {
