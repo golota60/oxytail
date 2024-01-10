@@ -17,12 +17,12 @@ pub struct ToggleProps {
 
 fn toggle_ball_svg(enabled: ReadSignal<bool>, props: Option<ToggleProps>) -> impl View {
     const OFF_SVG: &str = r#"<svg viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg" fill="none">
-    <rect x="0.5" y="0.5" width="23" height="11" rx="6" stroke="currentColor" stroke-width="1" />
+    <rect x="0.5" y="0.5" width="23" height="11" rx="6" stroke="currentColor" stroke-width="0.5" />
     <circle cx="6" cy="6" r="4.5" fill="currentColor"/>
     </svg>
     "#;
     const ON_SVG: &str = r#"<svg viewBox="0 0 24 12" xmlns="http://www.w3.org/2000/svg" fill="none">
-    <rect x="0.5" y="0.5" width="23" height="11" rx="6" stroke="currentColor" stroke-width="1" />
+    <rect x="0.5" y="0.5" width="23" height="11" rx="6" stroke="currentColor" stroke-width="0.5" />
     <circle cx="18" cy="6" r="4.5" fill="currentColor"/>
     </svg>
     "#;

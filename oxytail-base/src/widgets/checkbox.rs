@@ -42,6 +42,6 @@ pub fn labeled_checkbox<S: Display + 'static>(
     props: Option<CheckboxProps>,
 ) -> impl View {
     h_stack((checkbox_svg(checked, props), views::label(label)))
-        .style(|s| s.items_center().justify_center())
+        .style(|s| s.gap(8, 0))
         .keyboard_navigatable()
 }

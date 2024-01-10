@@ -2,6 +2,7 @@ use floem::{
     cosmic_text::Weight,
     peniko::Color,
     style::{Background, CursorStyle, Style, StyleValue, Transition},
+    unit::Pct,
 };
 use oxytail_base::{
     themes::ThemeStyling,
@@ -9,6 +10,7 @@ use oxytail_base::{
         button::ButtonProps,
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
+        radio_button::RadioProps,
         text_input::InputProps,
         toggle::ToggleProps,
     },
@@ -271,5 +273,75 @@ impl ThemeStyling for Theme {
         };
 
         Box::new(style_creator)
+    }
+
+    fn get_radio_style(
+        &self,
+        radio_props: RadioProps,
+    ) -> (Box<dyn Fn(Style) -> Style>, Box<dyn Fn(Style) -> Style>) {
+        let reusables = self.get_reusables();
+        let inner_dot_style_creator = move |s: Style| {
+            let curr_variant_color = get_variant_colors(radio_props.variant);
+            let base_toggle_style = s.border_radius(Pct(100.)).disabled(|s| {
+                s.background(Color::rgb(0.5, 0.5, 0.5))
+                    .hover(|s| s.background(Color::rgb(0.5, 0.5, 0.5)))
+            });
+
+            let size_enhancer = |s: Style| match radio_props.size {
+                // These sizes are completely arbitrary, daisyUI does not have sizes for radios
+                OxySize::Large => s.width(18.5).height(18.5),
+                OxySize::Normal => s.width(14).height(14),
+                OxySize::Small => s.width(10.5).height(10.5),
+                OxySize::Tiny => s.width(8).height(8),
+            };
+
+            let variant_enhancer = |s: Style| match radio_props.variant {
+                OxyVariant::Default => s.background(reusables.gray_default_color),
+                _ => s.background(curr_variant_color),
+            };
+
+            let enhanced_style = size_enhancer(base_toggle_style);
+            let enhanced_style = variant_enhancer(enhanced_style);
+
+            enhanced_style
+        };
+
+        let outer_dot_style_creator = move |s: Style| {
+            let curr_variant_color = get_variant_colors(radio_props.variant);
+            let base_toggle_style = s
+                .background(Color::TRANSPARENT)
+                .border(1)
+                .border_radius(Pct(100.))
+                .justify_center()
+                .items_center()
+                .disabled(|s| {
+                    s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
+                        .color(Color::GRAY)
+                        .border_color(Color::rgb(0.5, 0.5, 0.5))
+                });
+
+            let size_enhancer = |s: Style| match radio_props.size {
+                // These sizes are completely arbitrary, daisyUI does not have sizes for radios
+                OxySize::Large => s.width(32).height(32),
+                OxySize::Normal => s.width(24).height(24),
+                OxySize::Small => s.width(18).height(18),
+                OxySize::Tiny => s.width(14).height(14),
+            };
+
+            let variant_enhancer = |s: Style| match radio_props.variant {
+                OxyVariant::Default => s.border_color(reusables.gray_default_color),
+                _ => s.border_color(curr_variant_color),
+            };
+
+            let enhanced_style = size_enhancer(base_toggle_style);
+            let enhanced_style = variant_enhancer(enhanced_style);
+
+            enhanced_style
+        };
+
+        (
+            Box::new(inner_dot_style_creator),
+            Box::new(outer_dot_style_creator),
+        )
     }
 }
