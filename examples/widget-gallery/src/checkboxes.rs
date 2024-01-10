@@ -4,7 +4,7 @@ use floem::{
     views::{h_stack, label, v_stack, Decorators},
 };
 use oxytail_base::widgets::{
-    checkbox::{checkbox, CheckboxProps},
+    checkbox::{checkbox, labeled_checkbox, CheckboxProps},
     common_props::{OxySize, OxyVariant},
 };
 
@@ -85,5 +85,26 @@ pub fn checkboxes_variants() -> impl View {
             })),
         ))
         .style(|s| s.gap(4., 4.)),
+    ))
+}
+
+pub fn labeled_checkboxes() -> impl View {
+    let (checked, set_checked) = create_signal(true);
+    v_stack((
+        label(|| "Labeled checkboxes"),
+        labeled_checkbox(checked, || "I am the default!", None).on_click_stop(move |_| {
+            set_checked.update(|checked| *checked = !*checked);
+        }),
+        labeled_checkbox(
+            checked,
+            || "I am primary!",
+            Some(CheckboxProps {
+                variant: OxyVariant::Primary,
+                ..Default::default()
+            }),
+        )
+        .on_click_stop(move |_| {
+            set_checked.update(|checked| *checked = !*checked);
+        }),
     ))
 }
