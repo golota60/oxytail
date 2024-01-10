@@ -1,7 +1,8 @@
 use floem::style::Style;
 
 use crate::widgets::{
-    button::ButtonProps, checkbox::CheckboxProps, text_input::InputProps, toggle::ToggleProps,
+    button::ButtonProps, checkbox::CheckboxProps, radio_button::RadioProps, text_input::InputProps,
+    toggle::ToggleProps,
 };
 
 // TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT. FONT IDEA: ROBOTO
@@ -27,6 +28,12 @@ pub trait ThemeStyling {
     fn get_input_style(&self, checkbox_props: InputProps) -> Box<dyn Fn(Style) -> Style>;
     /// Defines how a toggle should look like.
     fn get_toggle_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style>;
+    /// Defined how a radio button should look like.
+    /// Returns a tuple, where first argument styles the "dot" of the active radio and the second one is the "outer circle", containing the default state of the radio.
+    fn get_radio_style(
+        &self,
+        radio_props: RadioProps,
+    ) -> (Box<dyn Fn(Style) -> Style>, Box<dyn Fn(Style) -> Style>);
 }
 
 pub struct ButtonStyle<T> {

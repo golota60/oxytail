@@ -20,11 +20,15 @@ use floem::{
 use inputs::{text_input_sizes, text_input_variants};
 use oxytail_base::{init_theme, widgets::button::button};
 use oxytail_theme_dark::Theme;
+use radio_buttons::{
+    disabled_labeled_radio_variants, labeled_radio_variants, radio_sizes, radio_variants,
+};
 use toggles::{toggle_sizes, toggle_variants};
 
 mod btn;
 mod checkboxes;
 mod inputs;
+mod radio_buttons;
 mod toggles;
 
 fn padded_container_box(child: impl View + 'static) -> ContainerBox {
@@ -32,7 +36,7 @@ fn padded_container_box(child: impl View + 'static) -> ContainerBox {
 }
 
 fn app_view() -> impl View {
-    let tabs: im::Vector<&str> = vec!["Intro", "Button", "Checkbox", "Input", "Toggle"]
+    let tabs: im::Vector<&str> = vec!["Intro", "Button", "Radio", "Checkbox", "Input", "Toggle"]
         .into_iter()
         .collect();
     let (tabs, _set_tabs) = create_signal(tabs);
@@ -149,6 +153,7 @@ fn app_view() -> impl View {
                     label(|| "Floem itself, in addition to widgets also provides more components. You can mix&match them as you please."))
             )),
             "Button" => padded_container_box(v_stack((btn_variants(), btn_outlines(), btn_sizes()))),
+            "Radio" => padded_container_box(v_stack((radio_variants(),radio_sizes(),labeled_radio_variants(),disabled_labeled_radio_variants()))),
             "Checkbox" => padded_container_box(v_stack((
                 checkboxes_variants(),
                 checkboxes_sizes(),

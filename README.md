@@ -125,7 +125,7 @@ Short term roadmap(primitives only):
 
 - [x] Toggles
 - [ ] Visual Dividers
-- [ ] Radio buttons
+- [x] Radio buttons
 - [ ] H1/H2/H3/H4/H5 Equivalents
 - [ ] Dropdowns/Selects
 - [ ] Tooltips
