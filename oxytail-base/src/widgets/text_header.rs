@@ -1,5 +1,3 @@
-use std::fmt::Display;
-
 use floem::{
     view::View,
     views::{self, Decorators},
@@ -14,11 +12,8 @@ pub struct HeaderProps {
     pub size: OxySize,
 }
 
-pub fn header<S: Display + 'static>(
-    label: impl Fn() -> S + 'static,
-    props: Option<HeaderProps>,
-) -> impl View {
-    let base_widget = views::label(label);
+pub fn text_header(label: &str, props: Option<HeaderProps>) -> impl View {
+    let base_widget = views::text(label);
     let theme = get_current_theme();
 
     let props = props.unwrap_or(HeaderProps::default());
