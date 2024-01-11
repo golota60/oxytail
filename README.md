@@ -123,10 +123,10 @@ Expect breaking changes.
 
 Short term roadmap(primitives only):
 
-- [x] Toggles
-- [ ] Visual Dividers
-- [x] Radio buttons
-- [x] H1/H2/H3/H4/H5 Equivalents
+- [x] Toggles(`toggle`)
+- [x] Visual Dividers(`text_divider`)
+- [x] Radio buttons(`radio_button`)
+- [x] H1/H2/H3/H4/H5 Equivalents(`text_header`)
 - [ ] Dropdowns/Selects
 - [ ] Tooltips
 - [ ] Badges
