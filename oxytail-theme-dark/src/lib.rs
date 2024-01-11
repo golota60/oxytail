@@ -10,6 +10,7 @@ use oxytail_base::{
         button::ButtonProps,
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
+        header::HeaderProps,
         radio_button::RadioProps,
         text_input::InputProps,
         toggle::ToggleProps,
@@ -343,5 +344,22 @@ impl ThemeStyling for Theme {
             Box::new(inner_dot_style_creator),
             Box::new(outer_dot_style_creator),
         )
+    }
+
+    fn get_header_style(&self, header_props: HeaderProps) -> Box<dyn Fn(Style) -> Style> {
+        let style_creator = move |s: Style| {
+            let size_enhancer = |s: Style| match header_props.size {
+                OxySize::Large => s.font_size(2.25 * 16.).font_bold(),
+                OxySize::Normal => s.font_size(1.5 * 16.).font_bold(),
+                OxySize::Small => s.font_size(1.25 * 16.).font_bold(),
+                OxySize::Tiny => s.font_bold(),
+            };
+
+            let enhanced_style = size_enhancer(s);
+
+            enhanced_style
+        };
+
+        Box::new(style_creator)
     }
 }
