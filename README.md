@@ -11,7 +11,7 @@ Features:
  - HIGHLY customizable - modify and create [your own themes](YOUR_OWN_THEME.md) easily
  - Supports dynamic theme switching(example needed!)
  - Built on top of [Floem](https://github.com/lapce/floem)
- - Loosey inspired by [daisyUI](https://daisyui.com/components/button/)
+ - Loosely inspired by [daisyUI](https://daisyui.com/components/button/)
 
 
 Showcase:
@@ -126,7 +126,7 @@ Short term roadmap(primitives only):
 - [x] Toggles
 - [ ] Visual Dividers
 - [x] Radio buttons
-- [ ] H1/H2/H3/H4/H5 Equivalents
+- [x] H1/H2/H3/H4/H5 Equivalents
 - [ ] Dropdowns/Selects
 - [ ] Tooltips
 - [ ] Badges

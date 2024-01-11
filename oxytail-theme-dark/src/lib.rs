@@ -1,7 +1,7 @@
 use floem::{
     cosmic_text::Weight,
     peniko::Color,
-    style::{Background, CursorStyle, Style, StyleValue, Transition},
+    style::{Background, CursorStyle, Display, Style, StyleValue, Transition},
     unit::Pct,
 };
 use oxytail_base::{
@@ -10,8 +10,8 @@ use oxytail_base::{
         button::ButtonProps,
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
-        header::HeaderProps,
         radio_button::RadioProps,
+        text_header::HeaderProps,
         text_input::InputProps,
         toggle::ToggleProps,
     },
@@ -361,5 +361,18 @@ impl ThemeStyling for Theme {
         };
 
         Box::new(style_creator)
+    }
+
+    fn get_divider_style(&self) -> Box<dyn Fn(Style) -> Style> {
+        let styles_creator = |s: Style| {
+            s.width_full()
+                .min_width_full()
+                .height(1)
+                .background(Color::GRAY)
+                .display(Display::Flex)
+                .flex_grow(1.)
+        };
+
+        Box::new(styles_creator)
     }
 }

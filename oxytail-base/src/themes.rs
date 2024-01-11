@@ -1,8 +1,8 @@
 use floem::style::Style;
 
 use crate::widgets::{
-    button::ButtonProps, checkbox::CheckboxProps, header::HeaderProps, radio_button::RadioProps,
-    text_input::InputProps, toggle::ToggleProps,
+    button::ButtonProps, checkbox::CheckboxProps, radio_button::RadioProps,
+    text_header::HeaderProps, text_input::InputProps, toggle::ToggleProps,
 };
 
 // TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT. FONT IDEA: ROBOTO
@@ -35,7 +35,11 @@ pub trait ThemeStyling {
         radio_props: RadioProps,
     ) -> (Box<dyn Fn(Style) -> Style>, Box<dyn Fn(Style) -> Style>);
 
+    /// Defined how a text_header should look like.
     fn get_header_style(&self, header_props: HeaderProps) -> Box<dyn Fn(Style) -> Style>;
+
+    /// Defined how a text_divider should look like.
+    fn get_divider_style(&self) -> Box<dyn Fn(Style) -> Style>;
 }
 
 pub struct ButtonStyle<T> {

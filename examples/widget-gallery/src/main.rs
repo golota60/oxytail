@@ -6,7 +6,7 @@ use floem::{
     kurbo::Size,
     peniko::Color,
     reactive::create_signal,
-    style::{Background, CursorStyle, Transition},
+    style::{Background, CursorStyle, Style, Transition},
     unit::UnitExt,
     view::View,
     views::{
@@ -156,7 +156,9 @@ fn app_view() -> impl View {
                     label(|| "This is a demo of widgets provided by oxytail. These widgets are just an extension on top of floem."),
                     label(|| "Floem itself, in addition to widgets also provides more components. You can mix&match them as you please."))
             )),
-            "Header" => padded_container_box(headers_sizes()),
+            "Header" => padded_container_box(headers_sizes()).style(|s: Style| {
+                s.width_full()
+            }),
             "Button" => padded_container_box(v_stack((btn_variants(), btn_outlines(), btn_sizes()))),
             "Radio" => padded_container_box(v_stack((radio_variants(),radio_sizes(),labeled_radio_variants(),disabled_labeled_radio_variants()))),
             "Checkbox" => padded_container_box(v_stack((
