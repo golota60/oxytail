@@ -1,11 +1,14 @@
-use floem::style::Style;
+use std::collections::HashMap;
+
+use floem::{peniko::Color, style::Style};
 
 use crate::widgets::{
-    button::ButtonProps, checkbox::CheckboxProps, radio_button::RadioProps,
-    text_header::HeaderProps, text_input::InputProps, toggle::ToggleProps,
+    button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
+    radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
+    toggle::ToggleProps,
 };
 
-// TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT. FONT IDEA: ROBOTO
+// TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT.
 // Below is for eventual font support
 // https://github.com/lapce/floem/issues/76
 // let mut font_db = floem::cosmic_text::fontdb::Database::new();
@@ -16,10 +19,25 @@ use crate::widgets::{
 // }
 // self = self.font_family(StyleValue::Val("Poppins-Bold.ttf".to_string()));
 
-// All the functions return a function on how to apply the style instead of the style object, cause we need to apply multiple styles to the same object.
+pub struct DefaultThemeProps {
+    /// Leading colors for variants.
+    pub variant_colors: fn(OxyVariant) -> Color, //HashMap<OxyVariant, Color>,
+    /// Hover colors for variants.
+    pub hover_variant_colors: fn(OxyVariant) -> Color, //HashMap<OxyVariant, Color>,
+    /// Active colors for variants.
+    pub active_variant_colors: fn(OxyVariant) -> Color, //HashMap<OxyVariant, Color>,
+    /// Text color to be used in dark contexts(i.e. light text color on dark background)
+    pub light_text_color: Color,
+    /// Text color to be used in light contexts(i.e. dark text color on light background)
+    pub dark_text_color: Color,
+}
 
 /// To be implemented by themes.
 pub trait ThemeStyling {
+    /// Defines a set of colors to be used by the theme.
+    /// This can be adjusted withing specific component function later if needed, but for a vast majority of themes the colors are reused.
+    fn theme_defaults(&self) -> DefaultThemeProps;
+
     /// Defines how a button style should look like.
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style>;
     /// Defines how a checkbox should look like.

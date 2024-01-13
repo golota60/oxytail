@@ -4,5 +4,6 @@ resolver = "2"
 members = [
 	"oxytail-base",
 	"oxytail-theme-dark",
+	"oxytail-theme-defaults",
 	"examples/*",
 ]
