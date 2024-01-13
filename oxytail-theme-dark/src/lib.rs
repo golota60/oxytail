@@ -18,23 +18,6 @@ use oxytail_base::{
 };
 use oxytail_theme_defaults::ThemeDefault;
 
-pub struct CommonThemeProps {
-    pub light_text_color: Color,
-    pub dark_text_color: Color,
-    pub gray_default_color: Color,
-}
-// pub trait Reusables {
-//     fn get_reusables(&self) -> CommonThemeProps;
-// }
-// impl Reusables for Theme<dyn ThemeDefault> {
-//     fn get_reusables(&self) -> CommonThemeProps {
-//         CommonThemeProps {
-//             light_text_color: Color::rgb8(166, 173, 187),
-//             dark_text_color: Color::rgb8(25, 2, 17),
-//             gray_default_color: Color::rgb8(166, 173, 187),
-//         }
-//     }
-// }
 
 #[derive(Default)]
 pub enum Theme {
@@ -79,7 +62,21 @@ fn get_hover_variant_colors(oxy_variant: OxyVariant) -> Color {
 }
 
 fn get_active_variant_colors(oxy_variant: OxyVariant) -> Color {
-    Color::BLACK
+    match oxy_variant {
+        OxyVariant::Default => Color::rgb8(20, 25, 30),
+
+        OxyVariant::Neutral => Color::rgb8(35, 42, 51),
+        OxyVariant::Primary => Color::rgb8(100, 110, 228),
+        OxyVariant::Secondary => Color::rgb8(239, 71, 188),
+        OxyVariant::Accent => Color::rgb8(0, 178, 159),
+        OxyVariant::Ghost => Color::rgb8(56, 63, 71),
+        OxyVariant::Link => Color::TRANSPARENT,
+
+        OxyVariant::Info => Color::rgb8(0, 157, 228),
+        OxyVariant::Success => Color::rgb8(0, 147, 95),
+        OxyVariant::Warning => Color::rgb8(231, 165, 0),
+        OxyVariant::Error => Color::rgb8(239, 76, 83),
+    }
 }
 
 impl ThemeStyling for Theme {

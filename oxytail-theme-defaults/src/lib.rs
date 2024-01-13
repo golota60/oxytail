@@ -22,10 +22,6 @@ use oxytail_base::{
 pub struct ThemeDefault;
 
 impl ThemeDefault {
-    pub fn theme_defaults() -> DefaultThemeProps {
-        panic!("`theme_defaults` needs to be implemented for the theme.");
-    }
-
     pub fn get_button_style(
         button_props: ButtonProps,
         theme_defaults: DefaultThemeProps,
