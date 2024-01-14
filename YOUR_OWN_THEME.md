@@ -1,4 +1,4 @@
-Creating your own theme in oxytail is mean to be as easy as possible.
+Creating your own theme in oxytail is meant to be as easy as possible.
 
 1. Create a new lib package with `cargo new <package_name> --lib`
 2. Create a public enum with your theme
@@ -28,11 +28,25 @@ oxytail-theme-defaults = { path = "../oxytail-theme-defaults" }
 3. Implement `ThemeStyling` trait for your enum
 
 ```rs
-use floem::style::Style;
+use floem::{peniko::Color, style::Style};
 use oxytail_base::{
-    themes::ThemeStyling,
-    widgets::button::{ButtonProps},
+    themes::{DefaultThemeProps, ThemeStyling},
+    widgets::{
+        button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
+    },
 };
+use oxytail_theme_defaults::DEFAULT_ACCENT;
+
+// These should return a `Color` for each variant.
+fn get_variant_colors(oxy_variant: OxyVariant) -> Color {
+    // ...
+}
+fn get_hover_variant_colors(oxy_variant: OxyVariant) -> Color {
+    // ...
+}
+fn get_active_variant_colors(oxy_variant: OxyVariant) -> Color {
+    // ...
+}
 
 impl ThemeStyling for Theme {
     // This function should return the leading colors for your theme.
@@ -51,6 +65,13 @@ impl ThemeStyling for Theme {
     // Start with returning `oxytail_theme_defaults::ThemeDefault::<func>` for a set of nicely working defaults, and override it if needed!
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style> {
         oxytail_theme_defaults::ThemeDefault::get_button_style(button_props, self.theme_defaults())
+    }
+
+    fn get_checkbox_style(&self, checkbox_props: CheckboxProps) -> Box<dyn Fn(Style) -> Style> {
+        oxytail_theme_defaults::ThemeDefault::get_checkbox_style(
+            checkbox_props,
+            self.theme_defaults(),
+        )
     }
 
     // ...rest of the trait
@@ -84,3 +105,6 @@ fn main() {
     app.run();
 }
 ```
+
+
+Something's still not clear? Please don't hesitate to open an issue! Also, if you need an example on this docs applied in practice, check out `oxytail-theme-dark` package in this repo!
