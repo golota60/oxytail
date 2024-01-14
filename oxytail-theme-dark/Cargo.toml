@@ -11,4 +11,4 @@ rust-version = "1.75"
 [dependencies]
 floem = "0.1.1"
 oxytail-base = "0.1.0"
-oxytail-theme-defaults = { path = "../oxytail-theme-defaults" }
+oxytail-theme-defaults = "0.1.0"
