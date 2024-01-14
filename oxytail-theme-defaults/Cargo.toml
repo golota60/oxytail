@@ -2,7 +2,7 @@
 name = "oxytail-theme-defaults"
 description = "A set of uncolored sane defaults for creating simple themes."
 license = "MIT"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.75"
 
@@ -10,4 +10,4 @@ rust-version = "1.75"
 
 [dependencies]
 floem = "0.1.1"
-oxytail-base = "0.1.0"
+oxytail-base = "0.1.1"

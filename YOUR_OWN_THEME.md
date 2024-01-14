@@ -19,8 +19,8 @@ So, install `floem`, `oxytail-theme-defaults` and `oxytail-base`.
 ```toml
 [dependencies]
 floem = "0.1.1"
-oxytail-base = "0.1.0"
-oxytail-theme-defaults = "0.1.0"
+oxytail-base = "0.1.1"
+oxytail-theme-defaults = "0.1.1"
 ```
 
 
