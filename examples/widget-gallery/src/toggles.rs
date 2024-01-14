@@ -1,10 +1,12 @@
 use floem::{
     reactive::create_signal,
     view::View,
-    views::{h_stack, label, v_stack, Decorators},
+    views::{h_stack, v_stack, Decorators},
 };
 use oxytail_base::widgets::{
     common_props::{OxySize, OxyVariant},
+    text_divider::text_divider,
+    text_header::text_header,
     toggle::{toggle, ToggleProps},
 };
 
@@ -18,7 +20,8 @@ fn toggle_with_state(props: Option<ToggleProps>) -> impl View {
 
 pub fn toggle_sizes() -> impl View {
     v_stack((
-        label(|| "Toggle sizes"),
+        text_header("Toggle sizes", None),
+        text_divider(),
         h_stack((
             toggle_with_state(Some(ToggleProps {
                 size: OxySize::Large,
@@ -40,7 +43,8 @@ pub fn toggle_sizes() -> impl View {
 
 pub fn toggle_variants() -> impl View {
     v_stack((
-        label(|| "Toggle variants"),
+        text_header("Toggle variants", None),
+        text_divider(),
         h_stack((
             toggle_with_state(None),
             toggle_with_state(Some(ToggleProps {
