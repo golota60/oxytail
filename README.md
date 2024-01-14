@@ -22,22 +22,15 @@ Showcase:
 
 `oxytail` consists of the main "base" package(`oxytail-base`), which loads the theme you want, and theme packages(currently only `oxytail-theme-dark`. More coming soon!).
 
-Next, you need to choose your theme, and install it. Currently, `oxytail` comes with only one theme, `oxytail-theme-dark`, but if it doesn't suit your needs you can [write your own one](YOUR_OWN_THEME.md). It's still early days for this project, so some widgets are missing.
+Next, you need to choose your theme, and install it. Currently, `oxytail` comes with only one theme, `oxytail-theme-dark`, but if it doesn't suit your needs you can easily [write your own one](YOUR_OWN_THEME.md). It's still early days for this project, so some widgets are missing.
 
-First, add floem(floem is not on crates.io just yet, so we need to add it as a git dependency) dependency to your `Cargo.toml`.
+First, add `floem`, `oxytail-base`(to load a theme) and `oxytail-theme-dark`(or any other theme) 
 
-Next, add `oxytail-base`(to load a theme) and `oxytail-theme-dark`(or any other theme) also as a git dependency, since we rely on `floem`, which is not published.
-
-
-```toml
-[dependencies]
-
-floem = { git = "https://github.com/lapce/floem", rev = "e304d30f8771a28788904d64464d8fd192d07439" }
-oxytail-theme-dark = { git = "https://github.com/golota60/oxytail"}
-oxytail-base = { git = "https://github.com/golota60/oxytail"}
+```
+cargo add floem oxytail-base oxytail-theme-dark
 ```
 
-Done! Now, initialize the theme, and simply use `floem` like normal, *except* import your widgets from `oxytail-base` instead of `floem`!
+Done! Now, initialize the theme, and simply use `floem` like normal, *except* import your widgets from `oxytail-base` instead! You can't mix&match both `floem` and `oxytail` widgets as needed.
 
 ```rs
 use floem::kurbo::Size;

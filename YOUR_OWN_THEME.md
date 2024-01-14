@@ -18,10 +18,9 @@ You can specify colors and override those behaviors if needed.
 So, install `floem`, `oxytail-theme-defaults` and `oxytail-base`.
 ```toml
 [dependencies]
-# Please check README.md for the most up-to-date `rev` value!
-floem = { git = "https://github.com/lapce/floem", rev = "e304d30f8771a28788904d64464d8fd192d07439" 
-oxytail-base = { path = "../oxytail-base" }
-oxytail-theme-defaults = { path = "../oxytail-theme-defaults" }
+floem = "0.1.1"
+oxytail-base = "0.1.0"
+oxytail-theme-defaults = "0.1.0"
 ```
 
 
