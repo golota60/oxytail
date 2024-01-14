@@ -31,8 +31,7 @@ Next, add `oxytail-base`(to load a theme) and `oxytail-theme-dark`(or any other 
 
 ```toml
 [dependencies]
-
-floem = { git = "https://github.com/lapce/floem", rev = "e304d30f8771a28788904d64464d8fd192d07439" }
+floem = "0.1.1"
 oxytail-theme-dark = { git = "https://github.com/golota60/oxytail"}
 oxytail-base = { git = "https://github.com/golota60/oxytail"}
 ```
