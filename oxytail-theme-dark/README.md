@@ -1,5 +1,5 @@
-[![crates.io](https://img.shields.io/crates/v/oxytail-dark-theme.svg)](https://crates.io/crates/oxytail-dark-theme)
-[![Released API docs](https://docs.rs/oxytail-dark-theme/badge.svg)](https://docs.rs/oxytail-dark-theme)
+[![crates.io](https://img.shields.io/crates/v/oxytail-theme-dark.svg)](https://crates.io/crates/oxytail-theme-dark)
+[![Released API docs](https://docs.rs/oxytail-theme-dark/badge.svg)](https://docs.rs/oxytail-theme-dark)
 
 ## Oxytail dark theme
 
