@@ -1,23 +1,13 @@
-use floem::{
-    cosmic_text::Weight,
-    peniko::Color,
-    style::{Background, CursorStyle, Display, Style, StyleValue, Transition},
-    unit::Pct,
-};
+use floem::{peniko::Color, style::Style};
 use oxytail_base::{
     themes::{DefaultThemeProps, ThemeStyling},
     widgets::{
-        button::ButtonProps,
-        checkbox::CheckboxProps,
-        common_props::{OxySize, OxyVariant},
-        radio_button::RadioProps,
-        text_header::HeaderProps,
-        text_input::InputProps,
+        button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
+        radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
         toggle::ToggleProps,
     },
 };
-use oxytail_theme_defaults::ThemeDefault;
-
+use oxytail_theme_defaults::DEFAULT_ACCENT;
 
 #[derive(Default)]
 pub enum Theme {
@@ -82,11 +72,12 @@ fn get_active_variant_colors(oxy_variant: OxyVariant) -> Color {
 impl ThemeStyling for Theme {
     fn theme_defaults(&self) -> DefaultThemeProps {
         DefaultThemeProps {
-            variant_colors: get_variant_colors,
-            hover_variant_colors: get_hover_variant_colors,
-            active_variant_colors: get_active_variant_colors,
+            get_variant_colors,
+            get_hover_variant_colors,
+            get_active_variant_colors,
             light_text_color: Color::rgb8(166, 173, 187),
             dark_text_color: Color::rgb8(25, 2, 17),
+            __default_accent: DEFAULT_ACCENT,
         }
     }
 

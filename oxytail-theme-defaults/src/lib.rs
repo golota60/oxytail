@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use floem::{
     cosmic_text::Weight,
     peniko::Color,
@@ -7,7 +5,7 @@ use floem::{
     unit::Pct,
 };
 use oxytail_base::{
-    themes::{DefaultThemeProps, ThemeStyling},
+    themes::DefaultThemeProps,
     widgets::{
         button::ButtonProps,
         checkbox::CheckboxProps,
@@ -19,6 +17,10 @@ use oxytail_base::{
     },
 };
 
+/// A default common accent color that can be used in `OxyVariant::Default` variant. Can be overridden via `DefaultThemeProps` -> `__default_accent`.
+/// `DefaultThemeProps` also contains better docs explaining what that prop is.
+pub const DEFAULT_ACCENT: Color = Color::rgb8(166, 173, 187);
+
 pub struct ThemeDefault;
 
 impl ThemeDefault {
@@ -29,9 +31,12 @@ impl ThemeDefault {
         let style_creator = move |s: Style| {
             let base_button_style = {
                 s.hover(|s| {
-                    s.background((theme_defaults.hover_variant_colors)(button_props.variant))
+                    s.background((theme_defaults.get_hover_variant_colors)(
+                        button_props.variant,
+                    ))
                 })
                 .disabled(|s| {
+                    // TODO: figure out disabled styling and how it should integrate with the API.
                     s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
                         .border_color(Color::rgb8(131, 145, 123).with_alpha_factor(0.3))
                         .color(Color::rgb8(166, 173, 187))
@@ -47,7 +52,7 @@ impl ThemeDefault {
                 .cursor(StyleValue::Val(floem::style::CursorStyle::Pointer))
             };
 
-            let curr_variant_color = (theme_defaults.variant_colors)(button_props.variant);
+            let curr_variant_color = (theme_defaults.get_variant_colors)(button_props.variant);
             let variant_enhancer = |s: Style| match button_props.variant {
                 OxyVariant::Default => s.background(curr_variant_color),
                 OxyVariant::Neutral => s.background(curr_variant_color),
@@ -100,7 +105,7 @@ impl ThemeDefault {
                     OxyVariant::Ghost => outline_style,
                     _ => outline_style
                         .color(curr_variant_color)
-                        .hover(|s| s.color(Color::rgb8(25, 2, 17))),
+                        .hover(|s| s.color(theme_defaults.dark_text_color)),
                 }
             } else {
                 enhanced_button_style
@@ -118,9 +123,8 @@ impl ThemeDefault {
         let defaults = theme_defaults;
 
         let style_creator = move |s: Style| {
-            let curr_variant_color = (defaults.variant_colors)(checkbox_props.variant);
+            let curr_variant_color = (defaults.get_variant_colors)(checkbox_props.variant);
             let base_checkbox_style = s
-                .background(Color::rgb8(166, 174, 188))
                 .transition(Background, Transition::linear(0.04))
                 .disabled(|s| {
                     s.background(Color::rgb8(180, 188, 175).with_alpha_factor(0.3))
@@ -130,8 +134,7 @@ impl ThemeDefault {
                 .color(Color::rgb8(29, 35, 42));
 
             let variant_enhancer = |s: Style| match checkbox_props.variant {
-                // OxyVariant::Default => s.background(reusables.gray_default_color),
-                // OxyVariant::Neutral => s.background(reusables.gray_default_color),
+                OxyVariant::Default => s.background(defaults.__default_accent),
                 _ => s.background(curr_variant_color).color(Color::BLACK),
             };
 
@@ -168,11 +171,10 @@ impl ThemeDefault {
                 })
                 .items_center()
                 .justify_center();
-            let curr_variant_color = (defaults.variant_colors)(input_props.variant);
+            let curr_variant_color = (defaults.get_variant_colors)(input_props.variant);
 
             let variant_enhancer = |s: Style| match input_props.variant {
-                // OxyVariant::Default => s.outline_color(reusables.gray_default_color),
-                // OxyVariant::Neutral => s.outline_color(reusables.gray_default_color),
+                OxyVariant::Default => s.outline_color(defaults.__default_accent),
                 _ => s.outline_color(curr_variant_color),
             };
             let size_enhancer = |s: Style| match input_props.size {
@@ -206,7 +208,7 @@ impl ThemeDefault {
     ) -> Box<dyn Fn(Style) -> Style> {
         let defaults = theme_defaults;
         let style_creator = move |s: Style| {
-            let curr_variant_color = (defaults.variant_colors)(toggle_props.variant);
+            let curr_variant_color = (defaults.get_variant_colors)(toggle_props.variant);
             let base_toggle_style = s.border_radius(31);
 
             let size_enhancer = |s: Style| match toggle_props.size {
@@ -218,7 +220,7 @@ impl ThemeDefault {
             };
 
             let variant_enhancer = |s: Style| match toggle_props.variant {
-                // OxyVariant::Default => s.color(reusables.gray_default_color),
+                OxyVariant::Default => s.color(defaults.__default_accent),
                 _ => s.color(curr_variant_color),
             };
 
@@ -237,7 +239,7 @@ impl ThemeDefault {
     ) -> (Box<dyn Fn(Style) -> Style>, Box<dyn Fn(Style) -> Style>) {
         let defaults = theme_defaults;
         let inner_dot_style_creator = move |s: Style| {
-            let curr_variant_color = (defaults.variant_colors)(radio_props.variant);
+            let curr_variant_color = (defaults.get_variant_colors)(radio_props.variant);
             let base_toggle_style = s.border_radius(Pct(100.)).disabled(|s| {
                 s.background(Color::rgb(0.5, 0.5, 0.5))
                     .hover(|s| s.background(Color::rgb(0.5, 0.5, 0.5)))
@@ -252,7 +254,7 @@ impl ThemeDefault {
             };
 
             let variant_enhancer = |s: Style| match radio_props.variant {
-                // OxyVariant::Default => s.background(reusables.gray_default_color),
+                OxyVariant::Default => s.background(defaults.__default_accent),
                 _ => s.background(curr_variant_color),
             };
 
@@ -263,7 +265,7 @@ impl ThemeDefault {
         };
 
         let outer_dot_style_creator = move |s: Style| {
-            let curr_variant_color = (defaults.variant_colors)(radio_props.variant);
+            let curr_variant_color = (defaults.get_variant_colors)(radio_props.variant);
             let base_toggle_style = s
                 .background(Color::TRANSPARENT)
                 .border(1)
@@ -285,7 +287,7 @@ impl ThemeDefault {
             };
 
             let variant_enhancer = |s: Style| match radio_props.variant {
-                // OxyVariant::Default => s.border_color(reusables.gray_default_color),
+                OxyVariant::Default => s.border_color(defaults.__default_accent),
                 _ => s.border_color(curr_variant_color),
             };
 
