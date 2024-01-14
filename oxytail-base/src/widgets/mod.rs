@@ -6,3 +6,4 @@ pub mod toggle;
 pub mod radio_button;
 pub mod text_header;
 pub mod text_divider;
+pub mod tooltip;

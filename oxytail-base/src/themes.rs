@@ -3,7 +3,7 @@ use floem::{peniko::Color, style::Style};
 use crate::widgets::{
     button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
     radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
-    toggle::ToggleProps,
+    toggle::ToggleProps, tooltip::TooltipProps,
 };
 
 // TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT.
@@ -33,12 +33,12 @@ pub struct DefaultThemeProps {
     // -------
     /// Default variant is a little bit "special".
     /// For any other variant usually the background is the same for every widget(ex. button's color is the same as checkbox's background color).
-    /// 
-    /// 
+    ///
+    ///
     /// But for `OxyVariant::Default`, checkbox's background for example, does not share the same background color as button. Same thing for input outline and bunch of other things.
     /// This prop controls the `Color` of those.
-    /// 
-    /// 
+    ///
+    ///
     /// It's marked with double floor `__` to indicate that this controls an edge-case behavior.
     pub __default_accent: Color,
 }
@@ -49,16 +49,16 @@ pub trait ThemeStyling {
     /// This can be adjusted within specific widget function later if needed, but for a vast majority of themes the colors are reused.
     fn theme_defaults(&self) -> DefaultThemeProps;
 
-    /// Defines how a button style should look like.
+    /// Defines how a `button` style should look like.
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style + '_>;
-    /// Defines how a checkbox should look like.
+    /// Defines how a `checkbox` should look like.
     fn get_checkbox_style(&self, checkbox_props: CheckboxProps)
         -> Box<dyn Fn(Style) -> Style + '_>;
-    /// Defines how a input should look like.
+    /// Defines how a `input` should look like.
     fn get_input_style(&self, checkbox_props: InputProps) -> Box<dyn Fn(Style) -> Style + '_>;
-    /// Defines how a toggle should look like.
+    /// Defines how a `toggle` should look like.
     fn get_toggle_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style + '_>;
-    /// Defined how a radio button should look like.
+    /// Defines how a `radio_button` should look like.
     /// Returns a tuple, where first argument styles the "dot" of the active radio and the second one is the "outer circle", containing the default state of the radio.
     fn get_radio_style(
         &self,
@@ -68,9 +68,12 @@ pub trait ThemeStyling {
         Box<dyn Fn(Style) -> Style + '_>,
     );
 
-    /// Defined how a text_header should look like.
+    /// Defines how a `text_header` should look like.
     fn get_header_style(&self, header_props: HeaderProps) -> Box<dyn Fn(Style) -> Style + '_>;
 
-    /// Defined how a text_divider should look like.
+    /// Defines how a `text_divider` should look like.
     fn get_divider_style(&self) -> Box<dyn Fn(Style) -> Style + '_>;
+
+    /// Defines how a `tooltip` should look like.
+    fn get_tooltip_style(&self, tooltip_props: TooltipProps) -> Box<dyn Fn(Style) -> Style + '_>;
 }

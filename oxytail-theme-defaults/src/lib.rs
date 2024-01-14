@@ -14,6 +14,7 @@ use oxytail_base::{
         text_header::HeaderProps,
         text_input::InputProps,
         toggle::ToggleProps,
+        tooltip::TooltipProps,
     },
 };
 
@@ -331,6 +332,41 @@ impl ThemeDefault {
                 .background(Color::GRAY)
                 .display(Display::Flex)
                 .flex_grow(1.)
+                .margin_vert(10.)
+        };
+
+        Box::new(styles_creator)
+    }
+
+    pub fn get_tooltip_style(
+        tooltip_props: TooltipProps,
+        theme_defaults: DefaultThemeProps,
+    ) -> Box<dyn Fn(Style) -> Style> {
+        let styles_creator = move |s: Style| {
+            let base_style = s.padding(8.);
+
+            let curr_variant_color = (theme_defaults.get_variant_colors)(tooltip_props.variant);
+            let variant_enhancer = |s: Style| match tooltip_props.variant {
+                OxyVariant::Default => s
+                    .background((theme_defaults.get_variant_colors)(OxyVariant::Neutral))
+                    .color(theme_defaults.light_text_color),
+                OxyVariant::Neutral => s
+                    .background(curr_variant_color)
+                    .color(theme_defaults.light_text_color),
+                _ => s.background(curr_variant_color),
+            };
+
+            let size_enhancer = |s: Style| match tooltip_props.size {
+                OxySize::Large => s.font_size(1.5 * 16.),
+                OxySize::Normal => s,
+                OxySize::Small => s.font_size(0.8 * 16.),
+                OxySize::Tiny => s.font_size(0.6 * 16.),
+            };
+
+            let enhanced_style = variant_enhancer(base_style);
+            let enhanced_style = size_enhancer(enhanced_style);
+
+            enhanced_style
         };
 
         Box::new(styles_creator)

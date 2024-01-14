@@ -128,7 +128,7 @@ Short term roadmap(primitives only):
 - [x] Radio buttons(`radio_button`)
 - [x] H1/H2/H3/H4/H5 Equivalents(`text_header`)
 - [ ] Dropdowns/Selects
-- [ ] Tooltips
+- [x] Tooltips
 - [ ] Badges
 - [ ] Progress bars
 - [ ] [your suggestion](https://github.com/golota60/oxytail/issues/new)
