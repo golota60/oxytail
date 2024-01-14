@@ -4,7 +4,7 @@ use oxytail_base::{
     widgets::{
         button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
         radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
-        toggle::ToggleProps,
+        toggle::ToggleProps, tooltip::TooltipProps,
     },
 };
 use oxytail_theme_defaults::DEFAULT_ACCENT;
@@ -113,5 +113,12 @@ impl ThemeStyling for Theme {
 
     fn get_divider_style(&self) -> Box<dyn Fn(Style) -> Style> {
         oxytail_theme_defaults::ThemeDefault::get_divider_style(self.theme_defaults())
+    }
+
+    fn get_tooltip_style(&self, tooltip_props: TooltipProps) -> Box<dyn Fn(Style) -> Style + '_> {
+        oxytail_theme_defaults::ThemeDefault::get_tooltip_style(
+            tooltip_props,
+            self.theme_defaults(),
+        )
     }
 }

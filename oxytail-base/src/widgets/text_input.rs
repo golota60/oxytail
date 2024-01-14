@@ -23,7 +23,6 @@ pub fn text_input(buffer: RwSignal<String>, props: Option<InputProps>) -> TextIn
 
     let styles_enhancer = theme.get_input_style(props);
 
-    // .style() does not exist on an input
     let styled_input = base_widget.style(move |s| styles_enhancer(s));
 
     styled_input

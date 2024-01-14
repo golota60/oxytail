@@ -1,15 +1,18 @@
 use floem::{
     view::View,
-    views::{label, stack, v_stack, Decorators},
+    views::{stack, v_stack, Decorators},
 };
 use oxytail_base::widgets::{
     button::{button, ButtonProps},
     common_props::{OxySize, OxyVariant},
+    text_divider::text_divider,
+    text_header::text_header,
 };
 
 pub fn btn_variants() -> impl View {
     v_stack((
-        label(|| "Button variants"),
+        text_header("Button variants", None),
+        text_divider(),
         stack((
             button(|| "Default", None),
             button(
@@ -89,7 +92,8 @@ pub fn btn_variants() -> impl View {
 
 pub fn btn_sizes() -> impl View {
     v_stack((
-        label(|| "Button sizes"),
+        text_header("Button sizes", None),
+        text_divider(),
         stack((
             button(
                 || "Large",
@@ -126,7 +130,8 @@ pub fn btn_sizes() -> impl View {
 
 pub fn btn_outlines() -> impl View {
     v_stack((
-        label(|| "Outlined buttons"),
+        text_header("Outlined buttons", None),
+        text_divider(),
         stack((
             button(
                 || "Info",

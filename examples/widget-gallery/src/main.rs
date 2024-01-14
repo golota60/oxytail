@@ -19,12 +19,16 @@ use floem::{
 
 use headers::headers_sizes;
 use inputs::{text_input_sizes, text_input_variants};
-use oxytail_base::{init_theme, widgets::button::button};
+use oxytail_base::{
+    init_theme,
+    widgets::{button::button, text_divider::text_divider, text_header::text_header},
+};
 use oxytail_theme_dark::Theme;
 use radio_buttons::{
     disabled_labeled_radio_variants, labeled_radio_variants, radio_sizes, radio_variants,
 };
 use toggles::{toggle_sizes, toggle_variants};
+use tooltips::{button_tooltips, label_tooltips, sizes_tooltips};
 
 mod btn;
 mod checkboxes;
@@ -32,6 +36,7 @@ pub mod headers;
 mod inputs;
 mod radio_buttons;
 mod toggles;
+pub mod tooltips;
 
 fn padded_container_box(child: impl View + 'static) -> ContainerBox {
     container_box(child).style(|s| s.padding(10.))
@@ -39,7 +44,7 @@ fn padded_container_box(child: impl View + 'static) -> ContainerBox {
 
 fn app_view() -> impl View {
     let tabs: im::Vector<&str> = vec![
-        "Intro", "Header", "Button", "Radio", "Checkbox", "Input", "Toggle",
+        "Intro", "Header", "Button", "Radio", "Checkbox", "Input", "Tooltip", "Toggle",
     ]
     .into_iter()
     .collect();
@@ -167,6 +172,18 @@ fn app_view() -> impl View {
                 labeled_checkboxes(),
             ))),
             "Input" => padded_container_box(v_stack((text_input_variants(), text_input_sizes()))),
+            "Tooltip" => padded_container_box(v_stack(( 
+                text_header("Tooltips", None),
+                text_divider(),
+                label(|| "Tooltips can be applied over pretty much every widget. Check it out!"),
+                button_tooltips(),
+                text_header("Tooltip variants", None),
+                text_divider(),
+                label_tooltips(),
+                text_header("Tooltip Sizes", None),
+                text_divider(),
+                sizes_tooltips()
+            ))).style(|s| s.gap(10.,10.)),
             "Toggle" => padded_container_box(v_stack((toggle_variants(), toggle_sizes()))),
             _ => padded_container_box(label(|| "Not implemented".to_owned())),
         },

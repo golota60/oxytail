@@ -5,6 +5,8 @@ use floem::{
 };
 use oxytail_base::widgets::{
     common_props::{OxySize, OxyVariant},
+    text_divider::text_divider,
+    text_header::text_header,
     text_input::{text_input, InputProps},
 };
 
@@ -14,7 +16,9 @@ pub fn text_input_variants() -> impl View {
     let secondary_text = create_rw_signal(String::from("I am secondary!"));
 
     v_stack((
-        label(|| "Text input variants(same as buttons, only a few shown)"),
+        text_header("Text input variants", None),
+        text_divider(),
+        label(|| "Supports same variants as buttons. Only a few shown here."),
         h_stack((
             text_input(default_text, None),
             text_input(
@@ -44,7 +48,8 @@ pub fn text_input_sizes() -> impl View {
     let tiny_text = create_rw_signal(String::from("I am tiny!"));
 
     v_stack((
-        label(|| "Text input sizes"),
+        text_header("Text input sizes", None),
+        text_divider(),
         h_stack((
             text_input(
                 large_text,

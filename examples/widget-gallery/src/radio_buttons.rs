@@ -8,6 +8,8 @@ use floem::{
 use oxytail_base::widgets::{
     common_props::{OxySize, OxyVariant},
     radio_button::{labeled_radio_button, radio_button, RadioProps},
+    text_divider::text_divider,
+    text_header::text_header,
 };
 
 #[derive(PartialEq, Eq, Clone)]
@@ -118,7 +120,8 @@ fn radio_variant_with_state(variant: OxyVariant, size: OxySize) -> impl View {
 
 pub fn radio_variants() -> impl View {
     v_stack((
-        label(|| "Radio button variants"),
+        text_header("Radio button variants", None),
+        text_divider(),
         h_stack((
             radio_variant_with_state(OxyVariant::Default, OxySize::Normal),
             radio_variant_with_state(OxyVariant::Neutral, OxySize::Normal),
@@ -149,7 +152,8 @@ pub fn radio_sizes() -> impl View {
 }
 pub fn labeled_radio_variants() -> impl View {
     v_stack((
-        label(|| "Labeled radio buttons"),
+        text_header("Labeled radio buttons", None),
+        text_divider(),
         h_stack((
             labeled_radio_variant_with_state(OxyVariant::Primary, OxySize::Normal),
             labeled_radio_variant_with_state(OxyVariant::Secondary, OxySize::Normal),
@@ -159,7 +163,8 @@ pub fn labeled_radio_variants() -> impl View {
 }
 pub fn disabled_labeled_radio_variants() -> impl View {
     v_stack((
-        label(|| "Disabled state"),
+        text_header("Disabled states", None),
+        text_divider(),
         h_stack((
             labeled_radio_variant_with_state(OxyVariant::Primary, OxySize::Normal)
                 .disabled(|| true),
