@@ -12,7 +12,7 @@ pub enum SuperTheme {
 
 ```
 
-Now, the easiest way to create a theme is to override the `oxytail-theme-defaults` package, which includes what can be described as "sane defaults" for behaviors of the components.
+Now, the easiest way to create a theme is to override the `oxytail-theme-defaults` package, which includes what can be described as "sane defaults" for behaviors of the widgets.
 You can specify colors and override those behaviors if needed.
 
 So, install `floem`, `oxytail-theme-defaults` and `oxytail-base`.
@@ -61,7 +61,7 @@ impl ThemeStyling for Theme {
         }
     }
 
-    // Rest of the interface controls stuff on a per-component basis.
+    // Rest of the interface controls stuff on a per-widget basis.
     // Start with returning `oxytail_theme_defaults::ThemeDefault::<func>` for a set of nicely working defaults, and override it if needed!
     fn get_button_style(&self, button_props: ButtonProps) -> Box<dyn Fn(Style) -> Style> {
         oxytail_theme_defaults::ThemeDefault::get_button_style(button_props, self.theme_defaults())

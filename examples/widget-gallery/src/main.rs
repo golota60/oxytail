@@ -154,7 +154,7 @@ fn app_view() -> impl View {
             "Intro" => padded_container_box(v_stack(
                 (
                     label(|| "This is a demo of widgets provided by oxytail. These widgets are just an extension on top of floem."),
-                    label(|| "Floem itself, in addition to widgets also provides more components. You can mix&match them as you please."))
+                    label(|| "Floem itself, in addition to widgets also provides more widgets. You can mix&match them as you please."))
             )),
             "Header" => padded_container_box(headers_sizes()).style(|s: Style| {
                 s.width_full()

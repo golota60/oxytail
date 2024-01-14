@@ -117,7 +117,7 @@ If you think some of the docs are unclear, also feel free to create an issue!
 
 ## Roadmap
 
-Obviously, we do not have many components which are present in daisyUI. The most immediate roadmap focuses on two things: More components, more prop support and more themes.
+Obviously, we do not have many widgets which are present in daisyUI. The most immediate roadmap focuses on two things: More widgets, more prop support and more themes.
 
 Expect breaking changes.
 

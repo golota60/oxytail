@@ -46,7 +46,7 @@ pub struct DefaultThemeProps {
 /// To be implemented by themes.
 pub trait ThemeStyling {
     /// Defines a set of colors to be used by the theme.
-    /// This can be adjusted withing specific component function later if needed, but for a vast majority of themes the colors are reused.
+    /// This can be adjusted within specific widget function later if needed, but for a vast majority of themes the colors are reused.
     fn theme_defaults(&self) -> DefaultThemeProps;
 
     /// Defines how a button style should look like.
