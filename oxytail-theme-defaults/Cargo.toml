@@ -1,6 +1,9 @@
 [package]
 name = "oxytail-theme-defaults"
 description = "A set of uncolored sane defaults for creating simple themes."
+documentation = "https://docs.rs/oxytail-theme-defaults/latest/oxytail_theme_defaults"
+keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
+categories = ["gui"]
 license = "MIT"
 version = "0.1.1"
 edition = "2021"

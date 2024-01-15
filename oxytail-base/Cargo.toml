@@ -1,6 +1,9 @@
 [package]
 name = "oxytail-base"
 description = "Building block for creating oxytail themes"
+documentation = "https://docs.rs/oxytail-base/latest/oxytail_base"
+keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
+categories = ["gui"]
 license = "MIT"
 version = "0.1.1"
 edition = "2021"

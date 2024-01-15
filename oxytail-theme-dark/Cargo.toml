@@ -1,6 +1,9 @@
 [package]
 name = "oxytail-theme-dark"
 description = "Dark theme for oxytail-base"
+documentation = "https://docs.rs/oxytail-theme-dark/latest/oxytail_theme_dark"
+keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
+categories = ["gui"]
 license = "MIT"
 version = "0.1.1"
 edition = "2021"
