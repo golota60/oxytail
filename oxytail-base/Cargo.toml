@@ -2,6 +2,7 @@
 name = "oxytail-base"
 description = "Building block for creating oxytail themes"
 documentation = "https://docs.rs/oxytail-base/latest/oxytail_base"
+repository = "https://github.com/golota60/oxytail"
 keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
 categories = ["gui"]
 license = "MIT"

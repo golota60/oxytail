@@ -2,6 +2,7 @@
 name = "oxytail-theme-defaults"
 description = "A set of uncolored sane defaults for creating simple themes."
 documentation = "https://docs.rs/oxytail-theme-defaults/latest/oxytail_theme_defaults"
+repository = "https://github.com/golota60/oxytail"
 keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
 categories = ["gui"]
 license = "MIT"
