@@ -121,4 +121,8 @@ impl ThemeStyling for Theme {
             self.theme_defaults(),
         )
     }
+
+    fn get_modal_style(&self, open: bool) -> Box<dyn Fn(Style) -> Style + '_> {
+        oxytail_theme_defaults::ThemeDefault::get_modal_style(open)
+    }
 }

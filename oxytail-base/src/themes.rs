@@ -76,4 +76,7 @@ pub trait ThemeStyling {
 
     /// Defines how a `tooltip` should look like.
     fn get_tooltip_style(&self, tooltip_props: TooltipProps) -> Box<dyn Fn(Style) -> Style + '_>;
+
+    /// Defined how a `modal` should look like. Only applies when the modal is open, otherwise it's Display::None
+    fn get_modal_style(&self, open: bool) -> Box<dyn Fn(Style) -> Style + '_>;
 }

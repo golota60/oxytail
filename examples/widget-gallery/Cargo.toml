@@ -8,6 +8,6 @@ rust-version = "1.75"
 
 [dependencies]
 im = "15.1.0"
-oxytail-theme-dark = "0.1.1"
-oxytail-base = "0.1.1"
+oxytail-theme-dark = { path = "../../oxytail-theme-dark" }
+oxytail-base = { path = "../../oxytail-base" }
 floem = "0.1.1"
