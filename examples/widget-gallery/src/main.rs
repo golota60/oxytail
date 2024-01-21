@@ -19,6 +19,7 @@ use floem::{
 
 use headers::headers_sizes;
 use inputs::{text_input_sizes, text_input_variants};
+use modals::modal_demo;
 use oxytail_base::{
     init_theme,
     widgets::{button::button, text_divider::text_divider, text_header::text_header},
@@ -34,6 +35,7 @@ mod btn;
 mod checkboxes;
 pub mod headers;
 mod inputs;
+pub mod modals;
 mod radio_buttons;
 mod toggles;
 pub mod tooltips;
@@ -44,7 +46,7 @@ fn padded_container_box(child: impl View + 'static) -> ContainerBox {
 
 fn app_view() -> impl View {
     let tabs: im::Vector<&str> = vec![
-        "Intro", "Header", "Button", "Radio", "Checkbox", "Input", "Tooltip", "Toggle",
+        "Intro", "Header", "Button", "Radio", "Checkbox", "Modal", "Input", "Tooltip", "Toggle",
     ]
     .into_iter()
     .collect();
@@ -172,6 +174,7 @@ fn app_view() -> impl View {
                 labeled_checkboxes(),
             ))),
             "Input" => padded_container_box(v_stack((text_input_variants(), text_input_sizes()))),
+            "Modal" => padded_container_box(modal_demo()),
             "Tooltip" => padded_container_box(v_stack(( 
                 text_header("Tooltips", None),
                 text_divider(),

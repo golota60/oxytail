@@ -371,4 +371,13 @@ impl ThemeDefault {
 
         Box::new(styles_creator)
     }
+
+    pub fn get_modal_style(open: bool) -> Box<dyn Fn(Style) -> Style> {
+        let styles_creator = move |s: Style| {
+            let base_style = s.padding(8.);
+
+            base_style
+        };
+        Box::new(styles_creator)
+    }
 }
