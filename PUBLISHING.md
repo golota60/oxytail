@@ -1,7 +1,7 @@
 Currently, publishing is done manually. Simply,
 
 1. Create a new branch
-2. Bump the version of each package and commit. We want to keep sync between each oxytail package version. Also update documentation and every mention of version to be installed(including each packages `Cargo.toml`!).
+2. Bump the version of each package(both in Cargo.toml version fields and as dependencies of other packages) and commit. We want to keep sync between each oxytail package version. Also update documentation and every mention of version to be installed(including each packages `Cargo.toml`!).
 3. Run the following commands(in this order)
 
 ```
