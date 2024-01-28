@@ -1,7 +1,7 @@
 use floem::{peniko::Color, style::Style};
 
 use crate::widgets::{
-    button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
+    badge::BadgeProps, button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
     radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
     toggle::ToggleProps, tooltip::TooltipProps,
 };
@@ -76,4 +76,7 @@ pub trait ThemeStyling {
 
     /// Defines how a `tooltip` should look like.
     fn get_tooltip_style(&self, tooltip_props: TooltipProps) -> Box<dyn Fn(Style) -> Style + '_>;
+
+    /// Defines how a `badge` should look like.
+    fn get_badge_style(&self, badge_props: BadgeProps) -> Box<dyn Fn(Style) -> Style + '_>;
 }

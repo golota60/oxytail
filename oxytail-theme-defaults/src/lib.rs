@@ -2,11 +2,12 @@ use floem::{
     cosmic_text::Weight,
     peniko::Color,
     style::{Background, CursorStyle, Display, Style, StyleValue, Transition},
-    unit::Pct,
+    unit::{Pct, Px},
 };
 use oxytail_base::{
     themes::DefaultThemeProps,
     widgets::{
+        badge::BadgeProps,
         button::ButtonProps,
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
@@ -365,6 +366,61 @@ impl ThemeDefault {
 
             let enhanced_style = variant_enhancer(base_style);
             let enhanced_style = size_enhancer(enhanced_style);
+
+            enhanced_style
+        };
+
+        Box::new(styles_creator)
+    }
+
+    /// Defines how a `badge` should look like.
+    pub fn get_badge_style(
+        badge_props: BadgeProps,
+        theme_defaults: DefaultThemeProps,
+    ) -> Box<dyn Fn(Style) -> Style> {
+        let styles_creator = move |s: Style| {
+            let base_style = s
+                .padding_vert(2.)
+                .padding_horiz(9.)
+                .font_size(13.)
+                .border_radius(Px(14.))
+                .items_center()
+                .justify_center()
+                .height(18.);
+
+            let curr_variant_color = (theme_defaults.get_variant_colors)(badge_props.variant);
+
+            let variant_enhancer = |s: Style| match badge_props.variant {
+                OxyVariant::Default => s
+                    .background((theme_defaults.get_variant_colors)(OxyVariant::Neutral))
+                    .color(theme_defaults.light_text_color),
+                OxyVariant::Neutral => s
+                    .background(curr_variant_color)
+                    .color(theme_defaults.light_text_color),
+                _ => s
+                    .background(curr_variant_color)
+                    .color(theme_defaults.dark_text_color),
+            };
+
+            let size_enhancer = |s: Style| match badge_props.size {
+                OxySize::Large => s.font_size(16.).height(22),
+                OxySize::Normal => s,
+                OxySize::Small => s.font_size(10.).height(15),
+                OxySize::Tiny => s.font_size(8.).height(11),
+            };
+
+            let outlined_enhancer = |s: Style| match badge_props.outlined {
+                true => s
+                    .border_color(curr_variant_color)
+                    .border(0.5)
+                    .background(Color::TRANSPARENT)
+                    .color(curr_variant_color),
+                false => s,
+            };
+
+            let enhanced_style = variant_enhancer(base_style);
+            let enhanced_style = size_enhancer(enhanced_style);
+            let enhanced_style = outlined_enhancer(enhanced_style);
 
             enhanced_style
         };

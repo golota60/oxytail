@@ -2,7 +2,7 @@ use floem::{peniko::Color, style::Style};
 use oxytail_base::{
     themes::{DefaultThemeProps, ThemeStyling},
     widgets::{
-        button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
+        badge::BadgeProps, button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
         radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
         toggle::ToggleProps, tooltip::TooltipProps,
     },
@@ -120,5 +120,10 @@ impl ThemeStyling for Theme {
             tooltip_props,
             self.theme_defaults(),
         )
+    }
+
+    /// Defines how a `badge` should look like.
+    fn get_badge_style(&self, badge_props: BadgeProps) -> Box<dyn Fn(Style) -> Style + '_> {
+        oxytail_theme_defaults::ThemeDefault::get_badge_style(badge_props, self.theme_defaults())
     }
 }
