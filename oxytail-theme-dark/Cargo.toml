@@ -2,10 +2,11 @@
 name = "oxytail-theme-dark"
 description = "Dark theme for oxytail-base"
 documentation = "https://docs.rs/oxytail-theme-dark/latest/oxytail_theme_dark"
+repository = "https://github.com/golota60/oxytail"
 keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
 categories = ["gui"]
 license = "MIT"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 rust-version = "1.75"
 
@@ -13,5 +14,7 @@ rust-version = "1.75"
 
 [dependencies]
 floem = "0.1.1"
-oxytail-base = "0.1.1"
-oxytail-theme-defaults = "0.1.1"
+oxytail-base = { path = "../oxytail-base" }
+# oxytail-base = "0.1.2"
+oxytail-theme-defaults = { path = "../oxytail-theme-defaults" }
+# oxytail-theme-defaults = "0.1.2"

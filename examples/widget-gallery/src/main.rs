@@ -1,3 +1,4 @@
+use badges::{badges_outlines, badges_sizes, badges_variants};
 use btn::{btn_outlines, btn_sizes, btn_variants};
 use checkboxes::{checkboxes_sizes, checkboxes_variants, labeled_checkboxes};
 use floem::{
@@ -30,6 +31,7 @@ use radio_buttons::{
 use toggles::{toggle_sizes, toggle_variants};
 use tooltips::{button_tooltips, label_tooltips, sizes_tooltips};
 
+pub mod badges;
 mod btn;
 mod checkboxes;
 pub mod headers;
@@ -44,7 +46,7 @@ fn padded_container_box(child: impl View + 'static) -> ContainerBox {
 
 fn app_view() -> impl View {
     let tabs: im::Vector<&str> = vec![
-        "Intro", "Header", "Button", "Radio", "Checkbox", "Input", "Tooltip", "Toggle",
+        "Intro", "Header", "Button", "Badge", "Radio", "Checkbox", "Input", "Tooltip", "Toggle",
     ]
     .into_iter()
     .collect();
@@ -165,6 +167,10 @@ fn app_view() -> impl View {
                 s.width_full()
             }),
             "Button" => padded_container_box(v_stack((btn_variants(), btn_outlines(), btn_sizes()))),
+            "Badge" => padded_container_box(v_stack((text_header("Variants", None),
+            text_divider(),badges_variants(), text_header("Sizes", None),
+            text_divider(), badges_sizes(), text_header("Outlines", None),
+            text_divider(), badges_outlines()))),
             "Radio" => padded_container_box(v_stack((radio_variants(),radio_sizes(),labeled_radio_variants(),disabled_labeled_radio_variants()))),
             "Checkbox" => padded_container_box(v_stack((
                 checkboxes_variants(),

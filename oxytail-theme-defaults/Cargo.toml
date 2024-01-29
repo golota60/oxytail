@@ -2,10 +2,11 @@
 name = "oxytail-theme-defaults"
 description = "A set of uncolored sane defaults for creating simple themes."
 documentation = "https://docs.rs/oxytail-theme-defaults/latest/oxytail_theme_defaults"
+repository = "https://github.com/golota60/oxytail"
 keywords = ["floem", "gui", "floem-themes", "daisyui", "widgets"]
 categories = ["gui"]
 license = "MIT"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 rust-version = "1.75"
 
@@ -13,4 +14,5 @@ rust-version = "1.75"
 
 [dependencies]
 floem = "0.1.1"
-oxytail-base = "0.1.1"
+oxytail-base = { path = "../oxytail-base" }
+# oxytail-base = "0.1.2"
