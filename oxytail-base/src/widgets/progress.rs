@@ -2,7 +2,7 @@ use std::fmt::Display;
 
 use floem::{
     style::FlexDirection,
-    unit::PxPctAuto,
+    unit::{PxPct, PxPctAuto},
     view::View,
     views::{container, empty, h_stack, Decorators},
 };

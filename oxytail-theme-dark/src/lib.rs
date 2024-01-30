@@ -122,7 +122,6 @@ impl ThemeStyling for Theme {
         )
     }
 
-    /// Defines how a `badge` should look like.
     fn get_badge_style(&self, badge_props: BadgeProps) -> Box<dyn Fn(Style) -> Style + '_> {
         oxytail_theme_defaults::ThemeDefault::get_badge_style(badge_props, self.theme_defaults())
     }

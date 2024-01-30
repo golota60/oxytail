@@ -441,6 +441,7 @@ impl ThemeDefault {
         Box<dyn Fn(Style) -> Style>,
         Box<dyn Fn(Style) -> Style>,
     ) {
+        let size = 26.0;
         let curr_variant_color = (theme_defaults.get_variant_colors)(progress_props.variant);
         let outer_styles_creator = move |s: Style| {
             let base_style = s
@@ -461,7 +462,7 @@ impl ThemeDefault {
             enhanced_style
         };
         let inner_styles_creator = move |s: Style| {
-            let base_style = s.background(Color::WHITE).border_radius(16);
+            let base_style = s.background(Color::WHITE).border_radius(16).min_width(size);
             let variant_enhancer = |s: Style| match progress_props.variant {
                 OxyVariant::Default => {
                     s.background((theme_defaults.get_variant_colors)(OxyVariant::Neutral))
@@ -476,8 +477,8 @@ impl ThemeDefault {
         };
         let ball_styles_creator = move |s: Style| {
             let base_style = s
-                .min_width(26.)
-                .min_height(26.)
+                .min_width(size)
+                .min_height(size)
                 .border(3)
                 .border_radius(Pct(50.))
                 .background(Color::rgb8(29, 35, 42));
