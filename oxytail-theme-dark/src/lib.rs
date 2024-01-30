@@ -3,8 +3,8 @@ use oxytail_base::{
     themes::{DefaultThemeProps, ThemeStyling},
     widgets::{
         badge::BadgeProps, button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
-        radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
-        toggle::ToggleProps, tooltip::TooltipProps,
+        progress::ProgressProps, radio_button::RadioProps, text_header::HeaderProps,
+        text_input::InputProps, toggle::ToggleProps, tooltip::TooltipProps,
     },
 };
 use oxytail_theme_defaults::DEFAULT_ACCENT;
@@ -122,8 +122,21 @@ impl ThemeStyling for Theme {
         )
     }
 
-    /// Defines how a `badge` should look like.
     fn get_badge_style(&self, badge_props: BadgeProps) -> Box<dyn Fn(Style) -> Style + '_> {
         oxytail_theme_defaults::ThemeDefault::get_badge_style(badge_props, self.theme_defaults())
+    }
+
+    fn get_progress_style(
+        &self,
+        progress_props: ProgressProps,
+    ) -> (
+        Box<dyn Fn(Style) -> Style + '_>,
+        Box<dyn Fn(Style) -> Style + '_>,
+        Box<dyn Fn(Style) -> Style + '_>,
+    ) {
+        oxytail_theme_defaults::ThemeDefault::get_progress_style(
+            progress_props,
+            self.theme_defaults(),
+        )
     }
 }

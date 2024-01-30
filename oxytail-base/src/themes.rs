@@ -2,8 +2,8 @@ use floem::{peniko::Color, style::Style};
 
 use crate::widgets::{
     badge::BadgeProps, button::ButtonProps, checkbox::CheckboxProps, common_props::OxyVariant,
-    radio_button::RadioProps, text_header::HeaderProps, text_input::InputProps,
-    toggle::ToggleProps, tooltip::TooltipProps,
+    progress::ProgressProps, radio_button::RadioProps, text_header::HeaderProps,
+    text_input::InputProps, toggle::ToggleProps, tooltip::TooltipProps,
 };
 
 // TODO: LOAD TTF FROM FILE SO THAT ITS CONSISTENT.
@@ -59,7 +59,9 @@ pub trait ThemeStyling {
     /// Defines how a `toggle` should look like.
     fn get_toggle_style(&self, toggle_props: ToggleProps) -> Box<dyn Fn(Style) -> Style + '_>;
     /// Defines how a `radio_button` should look like.
-    /// Returns a tuple, where first argument styles the "dot" of the active radio and the second one is the "outer circle", containing the default state of the radio.
+    /// Returns a tuple, where
+    /// First element styles the "dot" of the active radio
+    /// Second element is the "outer circle", containing the default state of the radio.
     fn get_radio_style(
         &self,
         radio_props: RadioProps,
@@ -79,4 +81,17 @@ pub trait ThemeStyling {
 
     /// Defines how a `badge` should look like.
     fn get_badge_style(&self, badge_props: BadgeProps) -> Box<dyn Fn(Style) -> Style + '_>;
+
+    /// Defines how a `progress` should look like.
+    /// First argument: inner progress
+    /// Second argument: outline
+    /// Third argument: the "ball at the end of the first arg"
+    fn get_progress_style(
+        &self,
+        progress_props: ProgressProps,
+    ) -> (
+        Box<dyn Fn(Style) -> Style + '_>,
+        Box<dyn Fn(Style) -> Style + '_>,
+        Box<dyn Fn(Style) -> Style + '_>,
+    );
 }

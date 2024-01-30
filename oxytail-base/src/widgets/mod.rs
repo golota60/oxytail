@@ -8,3 +8,4 @@ pub mod text_header;
 pub mod text_divider;
 pub mod tooltip;
 pub mod badge;
+pub mod progress;
