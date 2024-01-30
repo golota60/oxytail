@@ -25,6 +25,7 @@ use oxytail_base::{
     widgets::{button::button, text_divider::text_divider, text_header::text_header},
 };
 use oxytail_theme_dark::Theme;
+use progresses::progresses_variants;
 use radio_buttons::{
     disabled_labeled_radio_variants, labeled_radio_variants, radio_sizes, radio_variants,
 };
@@ -36,6 +37,7 @@ mod btn;
 mod checkboxes;
 pub mod headers;
 mod inputs;
+pub mod progresses;
 mod radio_buttons;
 mod toggles;
 pub mod tooltips;
@@ -46,7 +48,8 @@ fn padded_container_box(child: impl View + 'static) -> ContainerBox {
 
 fn app_view() -> impl View {
     let tabs: im::Vector<&str> = vec![
-        "Intro", "Header", "Button", "Badge", "Radio", "Checkbox", "Input", "Tooltip", "Toggle",
+        "Intro", "Header", "Button", "Badge", "Progress", "Radio", "Checkbox", "Input", "Tooltip",
+        "Toggle",
     ]
     .into_iter()
     .collect();
@@ -171,6 +174,7 @@ fn app_view() -> impl View {
             text_divider(),badges_variants(), text_header("Sizes", None),
             text_divider(), badges_sizes(), text_header("Outlines", None),
             text_divider(), badges_outlines()))),
+            "Progress" => padded_container_box(progresses_variants()),
             "Radio" => padded_container_box(v_stack((radio_variants(),radio_sizes(),labeled_radio_variants(),disabled_labeled_radio_variants()))),
             "Checkbox" => padded_container_box(v_stack((
                 checkboxes_variants(),

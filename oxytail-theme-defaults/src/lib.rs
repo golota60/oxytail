@@ -11,6 +11,7 @@ use oxytail_base::{
         button::ButtonProps,
         checkbox::CheckboxProps,
         common_props::{OxySize, OxyVariant},
+        progress::ProgressProps,
         radio_button::RadioProps,
         text_header::HeaderProps,
         text_input::InputProps,
@@ -426,5 +427,78 @@ impl ThemeDefault {
         };
 
         Box::new(styles_creator)
+    }
+
+    /// Defines how a `progress` should look like. Returns a tuple
+    /// First argument: inner progress
+    /// Second argument: outline
+    /// Third argument: the "ball at the end of the first arg"
+    pub fn get_progress_style(
+        progress_props: ProgressProps,
+        theme_defaults: DefaultThemeProps,
+    ) -> (
+        Box<dyn Fn(Style) -> Style>,
+        Box<dyn Fn(Style) -> Style>,
+        Box<dyn Fn(Style) -> Style>,
+    ) {
+        let curr_variant_color = (theme_defaults.get_variant_colors)(progress_props.variant);
+        let outer_styles_creator = move |s: Style| {
+            let base_style = s
+                .border(0.5)
+                .border_radius(16)
+                .border_color(Color::WHITE)
+                .background(Color::TRANSPARENT);
+            let variant_enhancer = |s: Style| match progress_props.variant {
+                OxyVariant::Default => {
+                    s.border_color((theme_defaults.get_variant_colors)(OxyVariant::Neutral))
+                }
+                OxyVariant::Neutral => s.border_color(curr_variant_color),
+                _ => s.border_color(curr_variant_color),
+            };
+
+            let enhanced_style = variant_enhancer(base_style);
+
+            enhanced_style
+        };
+        let inner_styles_creator = move |s: Style| {
+            let base_style = s.background(Color::WHITE).border_radius(16);
+            let variant_enhancer = |s: Style| match progress_props.variant {
+                OxyVariant::Default => {
+                    s.background((theme_defaults.get_variant_colors)(OxyVariant::Neutral))
+                }
+                OxyVariant::Neutral => s.background(curr_variant_color),
+                _ => s.background(curr_variant_color),
+            };
+
+            let enhanced_style = variant_enhancer(base_style);
+
+            enhanced_style
+        };
+        let ball_styles_creator = move |s: Style| {
+            let base_style = s
+                .min_width(26.)
+                .min_height(26.)
+                .border(3)
+                .border_radius(Pct(50.))
+                .background(Color::rgb8(29, 35, 42));
+
+            let variant_enhancer = |s: Style| match progress_props.variant {
+                OxyVariant::Default => {
+                    s.border_color((theme_defaults.get_variant_colors)(OxyVariant::Neutral))
+                }
+                OxyVariant::Neutral => s.border_color(curr_variant_color),
+                _ => s.border_color(curr_variant_color),
+            };
+
+            let enhanced_style = variant_enhancer(base_style);
+
+            enhanced_style
+        };
+
+        (
+            Box::new(inner_styles_creator),
+            Box::new(outer_styles_creator),
+            Box::new(ball_styles_creator),
+        )
     }
 }
